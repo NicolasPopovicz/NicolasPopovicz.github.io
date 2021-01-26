@@ -1,0 +1,822 @@
+/* Reset CSS */
+
+/* Fonte */
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+
+/* font-family: 'Fredoka One', cursive;
+font-family: 'Raleway', sans-serif; */
+
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+em,
+img,
+ul,
+li,
+form,
+label,
+footer,
+header,
+nav,
+section,
+canvas {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+footer,
+header,
+menu,
+nav,
+section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol,
+ul {
+	list-style: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	vertical-align: baseline;
+	list-style: none;
+	border: 0;
+}
+
+/* Fim Reset CSS */
+
+/* Navbar */
+
+.navbar {
+	font-family: "Raleway", sans-serif;
+	z-index: 15;
+	position: fixed;
+	width: 100%;
+	font-size: 1.25em;
+	color: whitesmoke;
+	display: flex;
+	padding: 20px 30px;
+	justify-content: space-between;
+	align-items: center;
+	background-color: transparent;
+}
+
+.navbar-scroll {
+	padding: 15px 20px;
+	background-color: rgba(52, 58, 64, 0.99);
+	transition: 0.5s ease-in-out;
+}
+
+.navbar nav li a::after {
+	content: "";
+	display: block;
+	background-color: rgba(255, 153, 0);
+	height: 2px;
+	width: 0;
+	transition: 0.3s;
+}
+
+.navbar nav li a:hover::after,
+.navbar nav li a.active::after {
+	width: 100%;
+}
+
+.internal-links-scroll {
+	background-color: rgba(52, 58, 64, 0.99);
+	transition: 0.5s ease-in-out;
+}
+
+.js-scroll {
+	opacity: 0;
+	transform: translate3d(-40px, 0, -30px);
+	transition: 0.4s;
+}
+
+.js-scroll.active {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
+}
+
+.fa-bars {
+	color: white;
+}
+
+.mobile-menu {
+	opacity: 0;
+	visibility: hidden;
+	cursor: pointer;
+	background-color: transparent;
+	outline: none;
+	font-size: 1.875em;
+	position: relative;
+	transition: 0.5s ease-in-out;
+}
+
+.mobile-menu.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.internal-links {
+	display: flex;
+	flex-direction: row;
+}
+
+.navbar a {
+	padding: 15px 20px;
+	color: whitesmoke;
+}
+
+.navbar > .link-to-top {
+	border-bottom: 1px solid transparent;
+	font-weight: 800;
+	transition: 0.3s;
+}
+
+.internal-links > li {
+	margin-right: 25px;
+}
+
+.internal-links > li > a {
+	border-bottom: 1px solid transparent;
+	transition: 0.3s;
+}
+
+.navbar > .link-to-top:hover,
+.internal-links > li > a:hover {
+	border-bottom: 1px solid rgba(255, 153, 0);
+}
+
+/* Fim navbar */
+
+/* Introdução */
+
+.introduction {
+	padding: 91px 0 0 0;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-blend-mode: overlay;
+	background-color: rgba(11, 11, 11, 0.5);
+	position: relative;
+}
+
+.main-content {
+	color: white;
+	max-width: 80vw;
+	font-family: "Raleway", sans-serif;
+}
+
+.main-content > h1 {
+	line-height: 1.5;
+	font-size: 5em;
+}
+
+.main-content > p {
+	margin-top: 10px;
+	line-height: 1.5;
+	font-size: 2em;
+}
+
+.main-content > p > strong {
+	color: rgba(255, 153, 0);
+}
+
+canvas {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	top: 0;
+	left: 0;
+}
+
+/* bouncing arrow */
+
+.introduction > a,
+.fa-chevron-down {
+	color: rgba(255, 153, 0);
+	z-index: 10;
+	bottom: 10px;
+	text-align: center;
+	margin-right: 40px;
+	cursor: pointer;
+	position: absolute;
+	transition: 1.2s ease;
+}
+
+/* Indicador de scroll down (bouncing) */
+
+@keyframes bounce {
+	0%,
+	20%,
+	50%,
+	80%,
+	100% {
+		-ms-transform: translateY(0);
+		transform: translateY(0);
+	}
+	40% {
+		-ms-transform: translateY(-30px);
+		transform: translateY(-30px);
+	}
+	60% {
+		-ms-transform: translateY(-15px);
+		transform: translateY(-15px);
+	}
+}
+
+.bounce {
+	-webkit-animation: bounce 2s infinite;
+	animation: bounce 2s infinite;
+}
+
+/* Fim introdução */
+
+/* Sobre */
+
+.about {
+	height: 100vh;
+	background-color: rgba(0, 0, 0);
+}
+
+.about > h1 {
+	padding: 60px 0;
+	text-align: center;
+	font-family: "Raleway", sans-serif;
+	font-weight: bold;
+	font-size: 3em;
+	color: rgba(255, 153, 0);
+	letter-spacing: 4px;
+}
+
+.about > p {
+	font-family: "Raleway", sans-serif;
+	color: rgba(255, 255, 255);
+	text-align: center;
+	margin-top: 15px;
+}
+
+.about-content {
+	padding: 20px 30px;
+	max-width: 1200px;
+	margin: 0 auto;
+	display: grid;
+	column-gap: 30px;
+	grid-template-columns: minmax(200px, 600px) minmax(200px, 600px);
+}
+
+.me,
+.formation {
+	width: 100%;
+	height: 50vh;
+	position: relative;
+	color: white;
+}
+
+.me {
+	grid-column: 1;
+}
+
+.formation {
+	grid-column: 2;
+}
+
+/* Flip cards */
+/* Greetings for the code creator: Ananya Neogi
+ * Visit this at Codepen: https://codepen.io/ananyaneogi/pen/Ezmyeb?editors=1100
+ */
+
+.flip-card {
+	background-color: transparent;
+	width: 100%;
+	height: 100%;
+	perspective: 1000px;
+}
+
+.flip-card-inner {
+	position: relative;
+	font-family: "Raleway", sans-serif;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	transition: transform 0.6s;
+	transform-style: preserve-3d;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:focus {
+	outline: 0;
+}
+
+.flip-cardY:hover .flip-card-inner,
+.flip-cardY:focus .flip-card-inner {
+	transform: rotateY(180deg);
+}
+
+.flip-cardX:hover .flip-card-inner,
+.flip-cardX:focus .flip-card-inner {
+	transform: rotateX(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	backface-visibility: hidden;
+}
+
+.flip-card-front {
+	background: black;
+	border: 1px solid white;
+	color: white;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.flip-card-front > h2 {
+	font-size: 1.5em;
+}
+
+.flip-card-front > p {
+	margin-top: 10px;
+}
+
+.flip-card-back {
+	background: white;
+	border: 1px solid black;
+	color: black;
+	transform: rotateY(180deg);
+	z-index: 1;
+	display: flex;
+	text-align: left;
+	align-items: center;
+}
+
+.flip-card-back.formation-content {
+	transform: rotateX(180deg);
+}
+
+.me-content,
+.formation-content {
+	padding: 0 10px;
+	line-height: 1.5;
+}
+
+/* Fim flip cards */
+
+/* Skills */
+
+.skills {
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(255, 255, 255);
+	display: grid;
+	grid-template-columns: minmax(20vw, 100vw) minmax(20vw, 100vw);
+}
+
+.skills-title {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.skills-title > h3 {
+	color: rgba(255, 153, 0);
+	font-family: "Raleway", sans-serif;
+	margin: 70px 0 0 0;
+	font-weight: bold;
+	font-size: 3em;
+	letter-spacing: 4px;
+}
+
+.skills-subtitle {
+	display: flex;
+	height: 70vh;
+	justify-content: center;
+	align-items: center;
+}
+
+.skills-title > .skills-subtitle > p {
+	font-size: 5em;
+	line-height: 1.3;
+	font-family: "Raleway", sans-serif;
+	max-width: 300px;
+	color: rgba(112, 112, 112);
+}
+
+.skills-content {
+	background-color: rgba(52, 58, 64);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.skills-content > p {
+	font-size: 2.5em;
+	font-family: "Raleway", sans-serif;
+	line-height: 1.5;
+	color: rgba(190, 190, 190);
+}
+
+/* Fim skills */
+
+/* Projetos */
+
+.projects {
+	width: 100%;
+	height: 100vh;
+	display: grid;
+	grid-template-columns: minmax(20vw, 40vw) minmax(20vw, 100vw);
+}
+
+.projects-title {
+	font-family: "Raleway", sans-serif;
+	color: whitesmoke;
+	display: flex;
+	padding: 0 10px;
+	text-align: center;
+	line-height: 1.5;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(25, 25, 25);
+	font-size: 2.5em;
+}
+
+.projects-slider {
+	width: 100%;
+	padding-bottom: 30px;
+	background-color: rgba(255, 255, 255);
+	display: flex;
+	flex-direction: column;
+	/* justify-content: space-around; */
+	align-items: center;
+}
+
+.projects-slider > h4 {
+	font-size: 3em;
+	color: rgba(255, 153, 0);
+	margin: 60px 0;
+	font-family: "Raleway", sans-serif;
+	letter-spacing: 4px;
+	font-weight: bold;
+}
+
+.projects-slider .slider {
+	box-sizing: border-box;
+	padding: 0 20px;
+	height: auto;
+}
+
+/* Fim slider */
+
+/* Contato */
+
+.contact {
+	background-color: rgba(61, 61, 61);
+	width: 100%;
+	height: 263px;
+	display: grid;
+	grid-template-columns: minmax(20vw, 50vw) 10px minmax(20vw, 50vw);
+}
+
+.contact > .separator {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.contact > .separator > .separator-markup {
+	height: 25vh;
+	width: 1px;
+	background: white;
+}
+
+.contact > .contact-info,
+.contact > .social-network {
+	max-width: 50vw;
+	margin: 0 auto;
+}
+
+.contact > .contact-info > h5,
+.contact > .social-network > h6 {
+	color: rgba(255, 153, 0);
+	padding: 50px 0 40px 0;
+	text-align: center;
+	font-size: 2em;
+	font-family: "Raleway", sans-serif;
+	font-weight: bold;
+	letter-spacing: 4px;
+}
+
+.contact > .contact-info > p,
+.contact > .social-network > p {
+	color: rgba(255, 255, 255);
+	line-height: 1.75;
+	margin-left: -20px;
+	font-family: "Raleway", sans-serif;
+	font-size: 1.5em;
+	letter-spacing: 2px;
+}
+
+.contact > .contact-info > p:before,
+.contact > .social-network > p:before {
+	content: "- ";
+	font-size: 1em;
+}
+
+.contact > .social-network > p > a.social-links {
+	color: rgba(255, 255, 255);
+	transition: 0.3s;
+}
+
+.contact > .social-network > p > a.social-links:hover {
+	color: rgba(255, 153, 0);
+}
+
+/* Fim */
+
+/* Footer */
+
+.footer {
+	background-color: rgba(255, 255, 255);
+	width: 100%;
+	height: 15vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: "Raleway", sans-serif;
+	font-size: 1.125em;
+}
+
+/* Fim */
+
+/* Responsivo */
+
+@media only screen and (max-width: 950px) {
+	.main-content > h1 {
+		font-size: 3.5em;
+	}
+
+	.main-content > p {
+		font-size: 1.5em;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	.internal-links > li {
+		margin-right: 10px;
+	}
+
+	.projects {
+		grid-template-columns: 1fr;
+		height: auto;
+	}
+
+	.projects-title {
+		padding: 30px 10px;
+	}
+
+	.projects-slider {
+		height: auto;
+		width: 100%;
+	}
+
+	.contact {
+		grid-template-columns: 1fr;
+		row-gap: 30px;
+		height: auto;
+	}
+
+	.contact > .separator > .separator-markup {
+		width: 50vw;
+		height: 1px;
+	}
+
+	.contact > .contact-info,
+	.contact > .social-network {
+		padding-bottom: 30px;
+	}
+
+	.contact > .contact-info > h5,
+	.contact > .social-network > h6 {
+		padding: 30px 0 30px 0;
+	}
+
+	.contact > .contact-info > p,
+	.contact > .social-network > p {
+		text-align: center;
+		margin-left: 0;
+	}
+}
+
+@media only screen and (max-width: 760px) {
+	.navbar > .link-to-top {
+		z-index: 10;
+	}
+
+	.mobile-menu {
+		opacity: 1;
+		z-index: 10;
+		visibility: visible;
+	}
+
+	.internal-links > li > a {
+		padding: 10px 20px;
+		font-size: 2em;
+		margin: 10px 0;
+	}
+
+	.internal-links > li {
+		padding: 0;
+		line-height: 2;
+		margin: 15px 0;
+	}
+
+	.internal-links {
+		opacity: 0;
+		visibility: hidden;
+		flex-direction: column;
+		position: absolute;
+		right: 0;
+		width: 100%;
+		height: 100vh;
+		top: 0px;
+		padding: 10px 50px;
+		justify-content: center;
+		align-items: center;
+		transform: translate3d(0, -70px, -30px);
+		transition: 0.5s;
+	}
+
+	.internal-links.scroll {
+		background-color: rgba(52, 58, 64, 0.99);
+	}
+
+	.internal-links.active {
+		opacity: 1;
+		visibility: visible;
+		transform: translate3d(0, 0, 0);
+	}
+
+	.main-content {
+		max-width: 100vw;
+	}
+
+	.about {
+		height: auto;
+	}
+
+	.about > h1 {
+		font-size: 2em;
+	}
+
+	.about > p {
+		padding-bottom: 35px;
+	}
+
+	.about-content {
+		column-gap: 0;
+		row-gap: 30px;
+		grid-template-columns: 1fr;
+	}
+
+	.formation {
+		grid-column: 1;
+	}
+
+	.info-card {
+		visibility: hidden;
+		opacity: 0;
+	}
+
+	.skills {
+		height: auto;
+		grid-template-columns: 1fr;
+	}
+
+	.skills-title {
+		background-color: rgba(255, 255, 255);
+	}
+
+	.skills-title > h3 {
+		margin: 40px 0 0 0;
+		font-size: 2em;
+	}
+
+	.skills-subtitle {
+		height: 50vh;
+	}
+
+	.skills-title > .skills-subtitle > p {
+		font-size: 2em;
+		text-align: center;
+	}
+
+	.skills-content {
+		padding: 50px 0;
+	}
+
+	.skills-content > p {
+		font-size: 2em;
+	}
+
+	.projects-slider > h4 {
+		font-size: 2em;
+	}
+
+	.projects-title {
+		font-size: 1.5em;
+	}
+
+	.contact > .contact-info,
+	.contact > .social-network {
+		max-width: 100%;
+	}
+}
+
+@media only screen and (max-width: 670px) {
+	.navbar {
+		padding: 10px 15px;
+	}
+
+	.navbar > a {
+		padding: 5px 10px;
+	}
+
+	.internal-links {
+		padding: 10px 20px;
+	}
+
+	.internal-links > li > a {
+		padding: 10px 20px;
+		font-size: 1.5em;
+		margin: 10px 0;
+	}
+
+	.main-content > h1 {
+		font-size: 2.5em;
+	}
+
+	.main-content > p {
+		font-size: 1em;
+	}
+
+	.me-content > p,
+	.formation-content > p {
+		font-size: 0.875em;
+	}
+
+	.contact > .contact-info > p,
+	.contact > .social-network > p {
+		text-align: center;
+		font-size: 1.125em;
+		margin-left: 0;
+	}
+
+	.footer {
+		height: 10vh;
+	}
+}
+
+@media only screen and (max-width: 420px) {
+	.main-content > h1 {
+		font-size: 2em;
+	}
+}
+
+/* Fim responsivo */
+
+/* Alguns códigos foram exemplos do CodePen */
