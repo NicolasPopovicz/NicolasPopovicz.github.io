@@ -7,16 +7,16 @@ export default function initTypeWriter() {
 	});
 
 	writer
-		.typeString("HTML5 e CSS3")
-		.pauseFor(1500)
-		.deleteAll()
 		.typeString("JavaScript ES")
 		.pauseFor(1500)
 		.deleteAll()
-		.typeString("Tailwind CSS e Vue.js")
+		.typeString("Tailwind CSS & Vue.js")
 		.pauseFor(1500)
 		.deleteAll()
-		.typeString("entre outros...")
+		.typeString("Bootstrap")
+		.pauseFor(1500)
+		.deleteAll()
+		.typeString("PHP & Laravel")
 		.pauseFor(2000)
 		.start();
 }
