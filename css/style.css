@@ -153,7 +153,6 @@ img {
 }
 
 .navbar > .link-to-top {
-	border-bottom: 1px solid transparent;
 	position: relative;
 	padding: 15px 20px;
 	font-weight: 800;
@@ -167,7 +166,6 @@ img {
 }
 
 .internal-links > li > a {
-	border-bottom: 1px solid transparent;
 	padding: 15px 20px;
 	transition: 0.3s;
 }
@@ -180,7 +178,7 @@ img {
 	left: 0;
 	width: 0%;
 	height: 1px;
-	background-color: white;
+	background-color: rgba(255, 153, 0);
 	transition: 0.3s ease-in;
 }
 
