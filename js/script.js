@@ -6,6 +6,7 @@ import initSmoothScroll from "./modules/smoothScroll.js";
 import initSlider from "./modules/slider.js";
 import initTypeWriter from "./modules/typeWriter.js";
 import initTextAnimation from "./modules/textAnimation.js";
+import initAge from "./modules/age.js";
 
 initAnimation();
 initMobileMenu();
@@ -15,3 +16,4 @@ initSmoothScroll();
 initSlider();
 initTypeWriter();
 initTextAnimation();
+initAge();

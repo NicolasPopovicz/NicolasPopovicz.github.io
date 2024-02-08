@@ -2,12 +2,12 @@ export default function initTypeWriter() {
 	const target = document.querySelector(".writer");
 	const writer = new Typewriter(target, {
 		loop: true,
-		typeSpeed: 80,
+		typeSpeed: 110,
 		deleteSpeed: 80,
 	});
 
 	writer
-		.typeString("JavaScript ES")
+		.typeString("JavaScript & TypeScript")
 		.pauseFor(1500)
 		.deleteAll()
 		.typeString("Tailwind CSS & Vue.js")
@@ -16,7 +16,7 @@ export default function initTypeWriter() {
 		.typeString("Bootstrap")
 		.pauseFor(1500)
 		.deleteAll()
-		.typeString("PHP & Laravel")
+		.typeString("PHP (Laravel & Symfony)")
 		.pauseFor(2000)
 		.start();
 }
