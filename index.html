@@ -1,187 +1,448 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="author" content="Nicolas Popovicz" />
-    <meta name="description"
-        content="Um pouco sobre minha pessoa e alguns dos meus projetos feitos durante meu aprendizado" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="image_src" href="img/icon.png" />
+
+    <!-- ── SEO ──────────────────────────────────────────────────── -->
+    <title>Nicolas Popovicz — Desenvolvedor Back-end | PHP · Node.js · Curitiba</title>
+    <meta name="description"
+        content="Nicolas Popovicz — Desenvolvedor Back-end Pleno especializado em PHP, Node.js, TypeScript e arquitetura de microsserviços. Experiência com WMS, DMS e OMS. Curitiba, PR." />
+    <meta name="keywords"
+        content="desenvolvedor back-end, PHP, Node.js, Laravel, TypeScript, Docker, Kubernetes, microsserviços, Curitiba, Nicolas Popovicz, back-end developer" />
+    <meta name="author" content="Nicolas Popovicz" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://nicolaspopovicz.github.io/" />
+
+    <!-- Open Graph ─────────────────────────────────────────────── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nicolas Popovicz — Desenvolvedor Back-end" />
+    <meta property="og:description"
+        content="Desenvolvedor back-end pleno com foco em PHP, Node.js, TypeScript e arquitetura de microsserviços. Construindo soluções de logística na Stokki." />
+    <meta property="og:url" content="https://nicolaspopovicz.github.io/" />
+    <meta property="og:image" content="https://nicolaspopovicz.github.io/img/icon.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Nicolas Popovicz" />
+
+    <!-- Twitter Card ────────────────────────────────────────────── -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Nicolas Popovicz — Desenvolvedor Back-end" />
+    <meta name="twitter:description"
+        content="Desenvolvedor back-end com foco em PHP, Node.js e microsserviços. Curitiba, PR." />
+    <meta name="twitter:image" content="https://nicolaspopovicz.github.io/img/icon.png" />
+
+    <!-- Structured Data (Person) ───────────────────────────────── -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Nicolas Popovicz",
+            "jobTitle": "Desenvolvedor Back-end Pleno",
+            "url": "https://nicolaspopovicz.github.io/",
+            "email": "nicolaspopovicz@gmail.com",
+            "telephone": "+55-41-98420-6797",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Curitiba",
+                "addressRegion": "PR",
+                "addressCountry": "BR"
+            },
+            "sameAs": [
+                "https://www.linkedin.com/in/nicolas-popovicz/",
+                "https://github.com/NicolasPopovicz"
+            ],
+            "knowsAbout": ["PHP", "Node.js", "TypeScript", "Laravel", "Docker", "Kubernetes", "PostgreSQL", "Redis", "Microsserviços"]
+        }
+    </script>
+
+    <!-- Favicons ────────────────────────────────────────────────── -->
     <link rel="shortcut icon" href="img/icon.png" type="image/x-icon" />
-    <link href="fontawesome/css/all.css" rel="stylesheet" />
+    <link rel="icon" href="img/icon.png" type="image/png" />
 
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/animation.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css" />
+    <!-- Fonts ──────────────────────────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet" />
 
-    <title>Portfolio | Nicolas</title>
+    <!-- Styles ─────────────────────────────────────────────────── -->
+    <link rel="stylesheet" href="css/portfolio.css" />
 </head>
 
 <body>
-    <nav class="navbar js-menu">
-        <a class="link-to-top" href="#top">Nicolas</a>
-        <button class="mobile-menu"><i class="fas fa-bars"></i></button>
-        <ul class="internal-links">
-            <li><a href="#about">Sobre</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projetos</a></li>
-            <li><a href="#contact">Contato</a></li>
-        </ul>
+
+    <div class="progress-bar" id="progress"></div>
+
+    <!-- NAV ──────────────────────────────────────────────────────── -->
+    <nav id="nav">
+        <div class="nav-logo">
+            <div class="nav-logo-dot"></div>
+            Nicolas Popovicz
+        </div>
+        <div class="nav-links">
+            <a href="#hero">Sobre</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experiência</a>
+            <a href="#projects">Projetos</a>
+            <a href="#contact">Contato</a>
+        </div>
+        <a href="mailto:nicolaspopovicz@gmail.com" class="nav-cta">Falar comigo</a>
     </nav>
 
-    <section class="introduction" id="top">
-        <canvas id="c"></canvas>
-        <div class="main-content">
-            <h1>
-                < Desenvolvedor <br />
-                &nbsp; &nbsp;e Web Designer />
-            </h1>
-            <p>Faço mágicas com <strong class="writer"></strong></p>
+    <!-- LOADER ───────────────────────────────────────────────────── -->
+    <div id="loader">
+        <div class="loader-terminal">
+            <div class="loader-bar">
+                <div class="loader-dot ld1"></div>
+                <div class="loader-dot ld2"></div>
+                <div class="loader-dot ld3"></div>
+                <div class="loader-title">~/portfolio/nicolas $ build</div>
+            </div>
+            <div class="loader-lines" id="loaderLines"></div>
+            <div class="loader-prog-wrap">
+                <div class="loader-prog" id="loaderProg"></div>
+            </div>
         </div>
-        <a href="#about"><i id="moveDown" class="fa fa-chevron-down fa-3x bounce"></i></a>
-    </section>
+    </div>
 
-    <section class="about js-scroll" id="about">
-        <h1 data-js="reveal">Sobre</h1>
-        <div class="about-content">
-            <div class="me">
-                <div class="flip-card flip-cardY" tabindex="0">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h2>Um pouco sobre mim</h2>
-                            <p>Clique no card!</p>
-                        </div>
-                        <div class="flip-card-back me-content">
-                            <p>
-                                Me chamo <strong>Nicolas Popovicz</strong>, tenho <span id="age"></span> anos e sou
-                                fascinado por Desenvolvimento Web. Constantemente em busca de aprimoramento, me dedico
-                                ao estudo contínuo de novos conceitos e técnicas para refinar minha abordagem no
-                                desenvolvimento web. Atualmente, meu foco está no aprofundamento das linguagens
-                                <strong>PHP</strong> e
-                                <strong>JavaScript</strong>, enquanto explorando a eficiência do <strong>Golang</strong>, com o objetivo
-                                de implementar
-                                soluções ainda mais eficazes e escaláveis. Acompanhe logo abaixo alguns projetos que
-                                realizei com o que aprendi.
-                            </p>
-                        </div>
-                    </div>
+    <!-- BACKGROUND PARTICLES (full page, fixed) ──────────────────── -->
+    <canvas id="hero-canvas"></canvas>
+
+    <!-- CUSTOM CURSOR ────────────────────────────────────────────── -->
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- HERO ─────────────────────────────────────────────────────── -->
+    <div id="hero">
+        <div class="hero-bg-orb orb1"></div>
+        <div class="hero-bg-orb orb2"></div>
+        <div class="hero-grid">
+            <div>
+                <div class="hero-available"
+                    style="background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.22);color:#ff8080">
+                    <div class="hero-available-dot" style="background:#ff8080"></div>
+                    Empregado · não aberto a oportunidades
+                </div>
+                <h1 class="hero-name"><span>Nicolas<br />Popovicz</span></h1>
+                <p class="hero-role"><span id="typeTarget"></span><span class="type-cursor"></span></p>
+                <p class="hero-desc">Desenvolvedor back-end pleno <strong style="color:var(--text)">@Stokki</strong>,
+                    construindo soluções de logística (WMS, DMS, OMS). Experiente em sistemas de alta disponibilidade
+                    com PHP e Node.js — diagnóstico de performance, microsserviços, Docker/Kubernetes e comunicação em
+                    tempo real.</p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary">Ver Projetos</a>
+                    <a href="#experience" class="btn-secondary">Experiência</a>
                 </div>
             </div>
-
-            <div class="formation">
-                <div class="flip-card flip-cardX" tabindex="0">
-                    <div class="flip-card-inner formation-inner">
-                        <div class="flip-card-front">
-                            <h2>Minha formação</h2>
-                            <p>Clique no card!</p>
-                        </div>
-                        <div class="flip-card-back formation-content">
-                            <p>
-                                Atualmente, possuo certificado em <strong>Desenvolvimento de Sistemas Web</strong> pelo
-                                <strong>SENAI</strong>, com duração de 1 ano e meio, e alguns cursos de aperfeiçoamento,
-                                como <strong>Web Security</strong> e <strong>Arduino</strong>. Também participei de
-                                Hackathon, Mundo Senai e Semana de Lógica de Programação pela instituição.
-                            </p>
-                        </div>
+            <div class="hero-card">
+                <div class="card-label">Overview</div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-num">4+</div>
+                        <div class="stat-label">Anos de exp.</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num">3</div>
+                        <div class="stat-label">Empresas</div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <p class="info-card">Pressione ou clique para manter o card virado!</p>
-    </section>
-
-    <section class="skills js-scroll" id="skills">
-        <div class="skills-title">
-            <h3 data-js="reveal">Skills</h3>
-            <div class="skills-subtitle">
-                <p>Tenho experiência com</p>
-            </div>
-        </div>
-        <div class="skills-content">
-            <p data-js="reveal">VUE.JS</p>
-            <p data-js="reveal">TAILWINDCSS</p>
-            <p data-js="reveal">TYPESCRIPT</p>
-            <p data-js="reveal">JAVASCRIPT</p>
-            <p data-js="reveal">SYMFONY</p>
-            <p data-js="reveal">LARAVEL</p>
-            <p data-js="reveal">PHP</p>
-        </div>
-    </section>
-
-    <section class="projects js-scroll" id="projects">
-        <div class="projects-title">
-            <p data-js="reveal">
-                Alguns dos projetos que desenvolvi durante o aprendizado de algumas
-                das linguagens de programação e frameworks.
-            </p>
-            <em data-js="reveal">
-                Os projetos estão disponíveis para acesso no GitHub. Acesse-os
-                clicando no link abaixo. 😉
-            </em>
-        </div>
-        <div class="projects-slider">
-            <h4 data-js="reveal">Projetos</h4>
-            <div class="slider">
-                <div class="my-slider">
-                    <div>
-                        <img src="img/animais.jpg" alt="Praticando JavaScript - Animais Fantásticos" />
-                    </div>
-                    <div>
-                        <img src="img/flexblog.jpg" alt="Praticando propriedade Flex no CSS3 - Flexblog" />
-                    </div>
-                    <div>
-                        <img src="img/wildbeast.jpg" alt="Praticando propriedade Grid no CSS3 - Wildbeast" />
-                    </div>
-                    <div>
-                        <img src="img/nature.jpg" alt="Praticando jQuery - Nature" />
-                    </div>
-                    <div>
-                        <img src="img/lescone.jpg" alt="Praticando pré-processador de CSS3 - Lescone" />
+                <div class="contact-list">
+                    <a href="mailto:nicolaspopovicz@gmail.com" class="contact-row">
+                        <div class="contact-ico">@</div>
+                        nicolaspopovicz@gmail.com
+                    </a>
+                    <a href="tel:+5541984206797" class="contact-row">
+                        <div class="contact-ico">☎</div>
+                        +55 41 98420-6797
+                    </a>
+                    <a href="https://linkedin.com/in/nicolas-popovicz" target="_blank" rel="noopener noreferrer"
+                        class="contact-row">
+                        <div class="contact-ico">in</div>
+                        nicolas-popovicz
+                    </a>
+                    <a href="https://github.com/NicolasPopovicz" target="_blank" rel="noopener noreferrer"
+                        class="contact-row">
+                        <div class="contact-ico">gh</div>
+                        NicolasPopovicz
+                    </a>
+                    <div class="contact-row">
+                        <div class="contact-ico">BR</div>
+                        Curitiba, Brasil
                     </div>
                 </div>
             </div>
         </div>
+        <div class="scroll-hint">
+            <div class="scroll-line"></div>
+            <span>SCROLL</span>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SKILLS ───────────────────────────────────────────────────── -->
+    <section id="skills">
+        <div class="reveal">
+            <div class="section-tag">Skills</div>
+            <h2 class="section-title">Tecnologias &amp; <em>Ferramentas</em></h2>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card reveal" style="transition-delay:0.05s">
+                <div class="skill-cat">Linguagens</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">PHP</span>
+                </div>
+            </div>
+            <div class="skill-card reveal" style="transition-delay:0.1s">
+                <div class="skill-cat">Frameworks</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Laravel</span>
+                    <span class="skill-tag">Angular</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Vue</span>
+                    <span class="skill-tag">Symfony</span>
+                    <span class="skill-tag">Express.js</span>
+                </div>
+            </div>
+            <div class="skill-card reveal" style="transition-delay:0.15s">
+                <div class="skill-cat">Bancos de Dados</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Redis</span>
+                    <span class="skill-tag">MariaDB</span>
+                </div>
+            </div>
+            <div class="skill-card reveal" style="transition-delay:0.2s">
+                <div class="skill-cat">Infraestrutura</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Kubernetes</span>
+                    <span class="skill-tag">RabbitMQ</span>
+                    <span class="skill-tag">Microsserviços</span>
+                    <span class="skill-tag">Linux</span>
+                </div>
+            </div>
+            <div class="skill-card reveal" style="transition-delay:0.25s">
+                <div class="skill-cat">Arquitetura</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">SOLID</span>
+                    <span class="skill-tag">Clean Architecture</span>
+                    <span class="skill-tag">MVC</span>
+                    <span class="skill-tag">DDD</span>
+                </div>
+            </div>
+            <div class="skill-card reveal" style="transition-delay:0.3s">
+                <div class="skill-cat">Testes &amp; Métodos</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">PHPUnit</span>
+                    <span class="skill-tag">Jest</span>
+                    <span class="skill-tag">Scrum</span>
+                    <span class="skill-tag">Kanban</span>
+                    <span class="skill-tag">CI/CD</span>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="contact" id="contact">
-        <div class="contact-info">
-            <h5 data-js="reveal">Contatos</h5>
-            <p>(41) 98420-6797</p>
-            <p>nicolaspopovicz@gmail.com</p>
+    <div class="divider"></div>
+
+    <!-- EXPERIENCE ───────────────────────────────────────────────── -->
+    <section id="experience" style="max-width:1320px; margin:0 auto;">
+        <div class="reveal">
+            <div class="section-tag">Experiência</div>
+            <h2 class="section-title">Histórico <em>Profissional</em></h2>
         </div>
-        <div class="separator">
-            <div class="separator-markup"></div>
-        </div>
-        <div class="social-network">
-            <h6 data-js="reveal">Redes Sociais</h6>
-            <p>
-                <a id="linkedin" class="social-links" href="https://www.linkedin.com/in/nicolas-popovicz/" target="_blank">
-                    LinkedIn
-                </a>
-            </p>
-            <p>
-                <a id="github" class="social-links" href="https://github.com/NicolasPopovicz" target="_blank">GitHub</a>
-            </p>
-            <p>
-                <a id="instagram" class="social-links" href="https://www.instagram.com/_p.nicolas?igsh=MTAyc2pnZXdybXh2NQ==" target="_blank">Instagram</a>
-            </p>
+        <div class="exp-list">
+
+            <div class="exp-item reveal">
+                <div>
+                    <div class="exp-badge exp-current">ATUAL</div>
+                    <div class="exp-company-name">Stokki</div>
+                    <div class="exp-period">Abr 2026 – Presente</div>
+                    <div class="exp-location">Curitiba · Híbrido</div>
+                    <div class="exp-stack">Node.js · TypeScript<br>PostgreSQL · Redis<br>Docker · Microsserviços</div>
+                </div>
+                <div>
+                    <div class="exp-role">Dev Back-end Pleno</div>
+                    <div class="exp-role-sub">Soluções para logística · WMS, DMS &amp; OMS</div>
+                    <ul class="exp-bullets">
+                        <li class="exp-bullet">Desenvolvimento de WMS (Warehouse Management System) para gestão de
+                            armazéns e operações de estoque em alto volume</li>
+                        <li class="exp-bullet">Construção de DMS (Distribution Management System) integrando rotas,
+                            transportadoras e canais de distribuição</li>
+                        <li class="exp-bullet">Implementação de OMS (Order Management System) com orquestração de
+                            pedidos multi-canal e SLAs críticos</li>
+                        <li class="exp-bullet">Modelagem de microsserviços e mensageria assíncrona para sincronizar
+                            domínios da cadeia logística</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="exp-item reveal">
+                <div>
+                    <div class="exp-badge">ANTERIOR</div>
+                    <div class="exp-company-name">Nexcore (Customer Experience by Selbetti)</div>
+                    <div class="exp-period">Mar 2024 – Abr 2026</div>
+                    <div class="exp-location">Curitiba · Híbrido</div>
+                    <div class="exp-stack">PHP · Laravel · Angular<br>Node.js · Linux · Docker<br>WebSocket · Asterisk
+                    </div>
+                </div>
+                <div>
+                    <div class="exp-role">Dev Fullstack</div>
+                    <div class="exp-role-sub">Plataforma omnichannel corporativa</div>
+                    <ul class="exp-bullets">
+                        <li class="exp-bullet">Diagnostiquei e resolvi memory leak crítico em serviço Node.js em
+                            produção, eliminando reinicializações não planejadas</li>
+                        <li class="exp-bullet">Tuning de queries e configurações de banco em ambientes com degradação de
+                            performance</li>
+                        <li class="exp-bullet">Desenvolvimento full-stack com Laravel, Node.js e Angular + integrações
+                            com APIs externas e aplicações em tempo real via WebSocket</li>
+                        <li class="exp-bullet">Soluções de comunicação VoIP (Asterisk) e automação de mensagens via
+                            WhatsApp e Telegram</li>
+                        <li class="exp-bullet">Containerização e orquestração com Docker e Kubernetes; automação de
+                            fluxos com Node-RED</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="exp-item reveal">
+                <div>
+                    <div class="exp-badge">ANTERIOR</div>
+                    <div class="exp-company-name">Procob S/A</div>
+                    <div class="exp-period">Fev 2023 – Jan 2024</div>
+                    <div class="exp-location">Curitiba · Presencial</div>
+                    <div class="exp-stack">Symfony · Node.js<br>RabbitMQ · Redis<br>Docker · GitLab CI/CD</div>
+                </div>
+                <div>
+                    <div class="exp-role">Dev Back-end</div>
+                    <div class="exp-role-sub">Sistemas de análise de crédito</div>
+                    <ul class="exp-bullets">
+                        <li class="exp-bullet">Implementei autenticação multifator (2FA) com Symfony e Redis como cache
+                            de sessão, aumentando a segurança do sistema</li>
+                        <li class="exp-bullet">Desenvolvi sistema de web scraping para coleta e população automatizada
+                            de base de dados, alimentando consultas de análise de crédito</li>
+                        <li class="exp-bullet">Autenticação via Azure SSO (SAML) e CI/CD pipelines com GitLab</li>
+                        <li class="exp-bullet">Gestão de filas com RabbitMQ e containerização completa com Docker</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="exp-item reveal">
+                <div>
+                    <div class="exp-badge">ANTERIOR</div>
+                    <div class="exp-company-name">Daju LTDA.</div>
+                    <div class="exp-period">Fev 2021 – Fev 2023</div>
+                    <div class="exp-location">Curitiba · Híbrido</div>
+                    <div class="exp-stack">PHP · Laravel · Node.js<br>MySQL · JavaScript<br>TailwindCSS · Linux</div>
+                </div>
+                <div>
+                    <div class="exp-role">Analista de Dev</div>
+                    <div class="exp-role-sub">Desenvolvimento web full-stack</div>
+                    <ul class="exp-bullets">
+                        <li class="exp-bullet">Back-end com foco em boas práticas: Clean Architecture, Clean Code e
+                            design patterns com compatibilidade entre versões de PHP</li>
+                        <li class="exp-bullet">Criação e consumo de APIs REST/RESTful com revisão de código para
+                            garantir escalabilidade</li>
+                        <li class="exp-bullet">Full-stack com PHP, Node.js, Laravel e MySQL; versionamento com
+                            Git/GitHub</li>
+                        <li class="exp-bullet">Construção de interfaces com HTML5, CSS3, JavaScript e TailwindCSS em
+                            ambientes Linux</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <footer class="footer">
-        <p>©Portfolio | Nicolas <span id="year"></span></p>
+    <div class="divider"></div>
+
+    <!-- PROJECTS ─────────────────────────────────────────────────── -->
+    <section id="projects" style="max-width:1320px; margin:0 auto;">
+        <div class="reveal">
+            <div class="section-tag">Projetos</div>
+            <h2 class="section-title">GitHub <em>Repos</em></h2>
+        </div>
+        <div class="projects-grid" id="projects-grid">
+            <div class="project-skeleton"></div>
+            <div class="project-skeleton"></div>
+            <div class="project-skeleton"></div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- EDUCATION + LANGUAGES ────────────────────────────────────── -->
+    <section id="contact" style="max-width:1320px; margin:0 auto;">
+        <div class="reveal">
+            <div class="section-tag">Sobre</div>
+            <h2 class="section-title">Formação &amp; <em>Idiomas</em></h2>
+        </div>
+        <div class="bottom-grid">
+            <div class="info-card reveal">
+                <div class="info-card-title">Formação Acadêmica</div>
+                <div class="edu-item">
+                    <div class="edu-school">Cruzeiro do Sul</div>
+                    <div class="edu-course">Graduação em Tecnologia</div>
+                    <div class="edu-period">2024 – 2026</div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-school">SENAI</div>
+                    <div class="edu-course">Desenvolvimento de Sistemas Web (Técnico)</div>
+                    <div class="edu-period">2019 – 2020</div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-school">Udemy</div>
+                    <div class="edu-course">Linux Fundamentals · Angular 2 · Banco de Dados · Adobe XD</div>
+                    <div class="edu-period">2021 – 2022</div>
+                </div>
+            </div>
+            <div class="info-card reveal" style="transition-delay:0.1s">
+                <div class="info-card-title">Idiomas</div>
+                <div class="lang-item">
+                    <span class="lang-name">Português</span>
+                    <span class="lang-level-badge">Nativo</span>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-name">Inglês</span>
+                    <span class="lang-level-badge">Avançado</span>
+                </div>
+                <div class="lang-item">
+                    <span class="lang-name">Japonês</span>
+                    <span class="lang-level-badge">Iniciante</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER ───────────────────────────────────────────────────── -->
+    <footer>
+        <div class="footer-logo">Nicolas Popovicz</div>
+        <div class="footer-links">
+            <a href="https://github.com/NicolasPopovicz" target="_blank" rel="noopener noreferrer"
+                class="footer-link">GitHub</a>
+            <a href="https://linkedin.com/in/nicolas-popovicz" target="_blank" rel="noopener noreferrer"
+                class="footer-link">LinkedIn</a>
+        </div>
+        <div class="footer-contacts">
+            <a href="mailto:nicolaspopovicz@gmail.com" class="footer-link">nicolaspopovicz@gmail.com</a>
+            <a href="tel:+5541984206797" class="footer-link">+55 41 98420-6797</a>
+        </div>
+        <div class="footer-text">Curitiba, Brasil · <span id="footer-year"></span></div>
+        <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/2.17.0/core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-    <script type="module" src="js/script.js"></script>
+    <!-- BACK TO TOP ──────────────────────────────────────────────── -->
+    <button id="back-to-top" aria-label="Voltar ao topo">↑</button>
 
-    <script>
-        document.querySelector("#year").innerText = (new Date()).getFullYear();
-    </script>
+    <!-- Scripts ─────────────────────────────────────────────────── -->
+    <script src="js/portfolio.js" defer></script>
 </body>
 
 </html>
