@@ -1,18 +1,85 @@
 /* ============================================================
    portfolio.js — Nicolas Popovicz Portfolio
+   Usado pela versão em português (/) e em inglês (/en/).
    ============================================================ */
 
 /* ── STATE ─────────────────────────────────────────────────── */
 let mx = window.innerWidth / 2, my = window.innerHeight / 2;
 const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isEN = document.documentElement.lang.toLowerCase().startsWith('en');
+
+const storage = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage bloqueado */ } },
+};
+
+/* ── YEARS OF EXPERIENCE (não fica desatualizado) ────────────── */
+function yearsSince(yyyymm) {
+  const [y, m] = yyyymm.split('-').map(Number);
+  const now = new Date();
+  let years = now.getFullYear() - y;
+  if (now.getMonth() + 1 < m) years--;
+  return years;
+}
+const EXP_SINCE = '2021-02';
+const expYears = yearsSince(EXP_SINCE);
+document.querySelectorAll('[data-years-since]').forEach(el => {
+  el.textContent = yearsSince(el.dataset.yearsSince);
+});
+
+/* ── TEXTOS POR IDIOMA ───────────────────────────────────────── */
+const T = isEN ? {
+  locale: 'en-US',
+  phrases: [
+    'Senior Software Developer @ Fruitfy',
+    'Back-end · PHP · Laravel · Node.js',
+    'Performance · Queues · Integrations',
+    `${expYears}+ years building production systems`,
+    'Open to opportunities and freelance',
+  ],
+  bootLoad: 'Loading modules',
+  bootCompile: (c, s) => `Compiling <span class="b">${c}</span> companies, <span class="b">${s}</span> skills, <span class="b">${expYears}+</span> years...`,
+  bootCompileShort: (s) => `Compiling <span class="b">${s}</span> skills, <span class="b">${expYears}+</span> years...`,
+  bootInit: 'Initializing',
+  ready: 'ready in',
+  noRepos: 'No public repositories found.',
+  noDesc: 'No description available.',
+  reposError: 'Could not load the repositories.<br>See them on GitHub:',
+  themeLabel: (name) => `Color theme: ${name}. Click to switch`,
+  menuOpen: 'Open menu', menuClose: 'Close menu',
+} : {
+  locale: 'pt-BR',
+  phrases: [
+    'Senior Software Developer @ Fruitfy',
+    'Back-end · PHP · Laravel · Node.js',
+    'Performance · Filas · Integrações',
+    `${expYears}+ anos construindo sistemas em produção`,
+    'Aberto a oportunidades e freelas',
+  ],
+  bootLoad: 'Carregando módulos',
+  bootCompile: (c, s) => `Compilando <span class="b">${c}</span> empresas, <span class="b">${s}</span> skills, <span class="b">${expYears}+</span> anos...`,
+  bootCompileShort: (s) => `Compilando <span class="b">${s}</span> skills, <span class="b">${expYears}+</span> anos...`,
+  bootInit: 'Inicializando',
+  ready: 'ready em',
+  noRepos: 'Nenhum repositório público encontrado.',
+  noDesc: 'Sem descrição disponível.',
+  reposError: 'Não foi possível carregar os repositórios.<br>Veja direto no GitHub:',
+  themeLabel: (name) => `Tema de cores: ${name}. Clique para trocar`,
+  menuOpen: 'Abrir menu', menuClose: 'Fechar menu',
+};
 
 /* ── SCROLL (RAF-throttled, single listener) ─────────────────── */
 const progress = document.getElementById('progress');
 const navEl = document.getElementById('nav');
 const navAnchors = document.querySelectorAll('.nav-links a');
-const sections = ['skills', 'experience', 'projects', 'contact'].map(id => document.getElementById(id)).filter(Boolean);
+// seções derivadas dos links do menu (mesma ordem da página), vale para os dois idiomas
+const sections = [...navAnchors]
+  .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+  .filter(Boolean);
 const orb1 = document.querySelector('.orb1');
 const orb2 = document.querySelector('.orb2');
+const btt = document.getElementById('back-to-top');
 
 let scrollTicking = false;
 window.addEventListener('scroll', () => {
@@ -22,8 +89,9 @@ window.addEventListener('scroll', () => {
       const pct = sy / (document.body.scrollHeight - window.innerHeight) * 100;
       progress.style.width = pct + '%';
       navEl.classList.toggle('scrolled', sy > 40);
+      btt.classList.toggle('visible', sy > 400);
 
-      if (!isTouchDevice) {
+      if (!isTouchDevice && !reduceMotion) {
         if (orb1) orb1.style.transform = 'translate3d(0,' + (sy * .25) + 'px,0)';
         if (orb2) orb2.style.transform = 'translate3d(0,' + (-sy * .15) + 'px,0)';
       }
@@ -38,6 +106,24 @@ window.addEventListener('scroll', () => {
     scrollTicking = true;
   }
 }, { passive: true });
+
+btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
+
+/* ── MOBILE MENU ─────────────────────────────────────────────── */
+const burger = document.getElementById('nav-burger');
+function setMenu(open) {
+  navEl.classList.toggle('menu-open', open);
+  burger.setAttribute('aria-expanded', String(open));
+  burger.setAttribute('aria-label', open ? T.menuClose : T.menuOpen);
+}
+if (burger) {
+  burger.addEventListener('click', () => setMenu(!navEl.classList.contains('menu-open')));
+  navAnchors.forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+  document.addEventListener('click', (e) => {
+    if (navEl.classList.contains('menu-open') && !navEl.contains(e.target)) setMenu(false);
+  });
+}
 
 /* ── INTERSECTION OBSERVER ──────────────────────────────────── */
 const observer = new IntersectionObserver((entries) => {
@@ -55,6 +141,10 @@ const langColors = {
   Vue: '#41b883', Shell: '#89e051', Go: '#00ADD8'
 };
 
+const escapeHTML = (s) => String(s).replace(/[&<>"']/g, c => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+));
+
 async function loadRepos() {
   const grid = document.getElementById('projects-grid');
   try {
@@ -68,7 +158,7 @@ async function loadRepos() {
       .slice(0, 9);
 
     if (filtered.length === 0) {
-      grid.innerHTML = '<div class="project-loading">Nenhum repositório público encontrado.</div>';
+      grid.innerHTML = `<div class="project-loading">${T.noRepos}</div>`;
       return;
     }
 
@@ -77,19 +167,19 @@ async function loadRepos() {
       const color = langColors[lang] || '#8895b0';
       const desc = repo.description
         ? repo.description.slice(0, 100) + (repo.description.length > 100 ? '…' : '')
-        : 'Sem descrição disponível.';
-      const updated = new Date(repo.updated_at).toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
+        : T.noDesc;
+      const updated = new Date(repo.updated_at).toLocaleDateString(T.locale, { month: 'short', year: 'numeric' });
       return `
-        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="project-card reveal" style="transition-delay:${i * 0.06}s">
+        <a href="${escapeHTML(repo.html_url)}" target="_blank" rel="noopener noreferrer" class="project-card reveal" style="transition-delay:${i * 0.06}s">
           <div class="project-header">
-            <div class="project-name">${repo.name}</div>
-            <div class="project-arrow">↗</div>
+            <h3 class="project-name">${escapeHTML(repo.name)}</h3>
+            <div class="project-arrow" aria-hidden="true">↗</div>
           </div>
-          <div class="project-desc">${desc}</div>
+          <div class="project-desc">${escapeHTML(desc)}</div>
           <div class="project-footer">
             <div class="project-lang">
               <div class="lang-dot" style="background:${color}"></div>
-              ${lang}
+              ${escapeHTML(lang)}
             </div>
             <div class="project-stars">
               ${repo.stargazers_count > 0 ? `⭐ ${repo.stargazers_count}` : updated}
@@ -99,12 +189,10 @@ async function loadRepos() {
     }).join('');
 
     grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    attachCardTilt();
-    attachHoverFXToCards();
   } catch (err) {
     grid.innerHTML = `
       <div class="project-loading" style="grid-column:1/-1">
-        <p style="margin-bottom:16px">Não foi possível carregar os repositórios.<br>Veja direto no GitHub:</p>
+        <p style="margin-bottom:16px">${T.reposError}</p>
         <a href="https://github.com/NicolasPopovicz" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block">github.com/NicolasPopovicz</a>
       </div>`;
   }
@@ -116,67 +204,108 @@ loadRepos();
 if (!isTouchDevice) {
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursor-ring');
+  const body = document.body;
+  body.classList.add('custom-cursor');
 
-  window.addEventListener('mousemove', (e) => {
+  // só o que é clicável de verdade muda o cursor
+  const CLICKABLE = 'a[href], button:not(:disabled), [role="button"], label[for], summary';
+  const NAV_OFFSET = 72; // altura do menu fixo (mesmo valor do scroll-padding-top)
+
+  // dica mostrada dentro do cursor: para onde o clique leva
+  function cursorIcon(el) {
+    if (el.tagName !== 'A') return '';
+    const href = el.getAttribute('href') || '';
+    if (href.startsWith('mailto:')) return '@';
+    if (href.startsWith('#')) {
+      const target = document.getElementById(href.slice(1));
+      if (!target) return '';
+      const dist = target.getBoundingClientRect().top - NAV_OFFSET;
+      if (Math.abs(dist) < 40) return '';
+      return dist < 0 ? '↑' : '↓';
+    }
+    if (el.target === '_blank') return '↗';
+    return '→';
+  }
+
+  function moveCursor(e) {
     mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    ring.style.left = mx + 'px'; ring.style.top = my + 'px';
-  });
+    cursor.style.left = ring.style.left = mx + 'px';
+    cursor.style.top = ring.style.top = my + 'px';
+    body.classList.add('cursor-ready');
+    body.classList.remove('cursor-hidden');
+  }
+  window.addEventListener('mousemove', moveCursor, { passive: true });
 
+  // um único listener decide o estado: entrar num filho de um link continua "sobre o link"
   document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a,button,.skill-tag,.project-card,.contact-row,.btn-primary,.btn-secondary,.nav-cta'))
-      document.body.classList.add('cursor-hover');
+    moveCursor(e);
+    const el = e.target.closest(CLICKABLE);
+    body.classList.toggle('cursor-hover', !!el);
+    ring.dataset.icon = el ? cursorIcon(el) : '';
+  }, { passive: true });
+
+  // mouse saiu da janela: esconde em vez de deixar o cursor parado na borda
+  window.addEventListener('mouseout', (e) => {
+    if (!e.relatedTarget) body.classList.add('cursor-hidden');
   });
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a,button,.skill-tag,.project-card,.contact-row,.btn-primary,.btn-secondary,.nav-cta'))
-      document.body.classList.remove('cursor-hover');
-  });
+  document.addEventListener('mousedown', () => body.classList.add('cursor-down'));
+  document.addEventListener('mouseup', () => body.classList.remove('cursor-down'));
 }
 
 /* ── LOADER ─────────────────────────────────────────────────── */
+/* Roda só na primeira visita da aba; com "reduzir movimento" nem aparece
+   (a classe .no-loader é aplicada por um script inline no <head>). */
+const loaderEl = document.getElementById('loader');
 const loaderLines = document.getElementById('loaderLines');
 const loaderProg = document.getElementById('loaderProg');
+const skipLoader = document.documentElement.classList.contains('no-loader');
+try { sessionStorage.setItem('np-booted', '1'); } catch (e) { /* storage bloqueado */ }
+
+const nCompanies = document.querySelectorAll('.exp-item').length;
+const nSkills = document.querySelectorAll('.skill-tag').length;
 
 const bootLines = isTouchDevice
   ? [
       '<span class="d">$</span> <span class="g">npm</span> run <span class="y">build:portfolio</span>',
-      '<span class="d">›</span> Compilando <span class="b">26</span> skills, <span class="b">9</span> repos...',
+      `<span class="d">›</span> ${T.bootCompileShort(nSkills)}`,
       '<span class="d">›</span> <span class="ok">✓ ready</span>',
     ]
   : [
       '<span class="d">$</span> <span class="g">npm</span> run <span class="y">build:portfolio</span>',
-      '<span class="d">›</span> Carregando módulos <span class="p">@nicolas/core</span>...',
-      '<span class="d">›</span> Compilando <span class="b">3</span> empresas, <span class="b">26</span> skills, <span class="b">9</span> repos...',
-      '<span class="d">›</span> Inicializando <span class="p">canvas</span> + <span class="p">animations</span>...',
-      '<span class="d">›</span> <span class="ok">✓ ready</span> em <span class="y">1.2s</span>',
+      `<span class="d">›</span> ${T.bootLoad} <span class="p">@nicolas/core</span>...`,
+      `<span class="d">›</span> ${T.bootCompile(nCompanies, nSkills)}`,
+      `<span class="d">›</span> ${T.bootInit} <span class="p">canvas</span> + <span class="p">animations</span>...`,
+      `<span class="d">›</span> <span class="ok">✓ ${T.ready}</span> <span class="y">1.2s</span>`,
     ];
 
-let bootI = 0;
-function bootStep() {
-  if (bootI < bootLines.length) {
+function bootStep(i = 0) {
+  if (i < bootLines.length) {
     const l = document.createElement('div');
-    l.className = 'loader-line'; l.innerHTML = bootLines[bootI];
+    l.className = 'loader-line'; l.innerHTML = bootLines[i];
     loaderLines.appendChild(l);
     requestAnimationFrame(() => l.classList.add('show'));
-    bootI++;
-    setTimeout(bootStep, 280);
+    setTimeout(() => bootStep(i + 1), 280);
   }
 }
-bootStep();
-
-let lp = 0;
-const lpTimer = setInterval(() => {
-  lp += Math.random() * 7 + 2;
-  if (lp >= 100) { lp = 100; clearInterval(lpTimer); setTimeout(finishLoader, 400); }
-  loaderProg.style.width = lp + '%';
-}, 80);
 
 function finishLoader() {
-  document.getElementById('loader').classList.add('done');
+  loaderEl.classList.add('done');
   document.body.style.overflow = '';
-  startHeroAnimations();
+  if (!reduceMotion) startHeroAnimations();
 }
-document.body.style.overflow = 'hidden';
+
+if (skipLoader) {
+  finishLoader();
+} else {
+  document.body.style.overflow = 'hidden';
+  bootStep();
+  let lp = 0;
+  const lpTimer = setInterval(() => {
+    lp += Math.random() * 7 + 2;
+    if (lp >= 100) { lp = 100; clearInterval(lpTimer); setTimeout(finishLoader, 400); }
+    loaderProg.style.width = lp + '%';
+  }, 80);
+}
 
 /* ── HERO ENTRY ANIMATIONS ───────────────────────────────────── */
 function startHeroAnimations() {
@@ -214,13 +343,7 @@ function startHeroAnimations() {
 function startTypewriter() {
   const target = document.getElementById('typeTarget');
   if (!target) return;
-  const phrases = [
-    'Back-end Developer · Pleno @ Stokki',
-    'Logística · WMS · DMS · OMS',
-    'Node.js · TypeScript · PostgreSQL',
-    'Microsserviços · Docker · Redis',
-    '4+ anos construindo sistemas críticos',
-  ];
+  const phrases = T.phrases;
   let p = 0, c = 0, erasing = false;
   function tick() {
     const cur = phrases[p];
@@ -286,10 +409,8 @@ function startCanvasParticles() {
   draw();
 }
 
-/* parallax orbs handled inside unified scroll listener above */
-
 /* ── MAGNETIC BUTTONS (desktop only) ────────────────────────── */
-if (!isTouchDevice) {
+if (!isTouchDevice && !reduceMotion) {
   document.querySelectorAll('.btn-primary,.btn-secondary,.nav-cta').forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
       const r = btn.getBoundingClientRect();
@@ -301,37 +422,13 @@ if (!isTouchDevice) {
   });
 }
 
-/* active nav handled inside unified scroll listener above */
-
-/* ── 3D TILT ON CARDS (desktop only) ────────────────────────── */
-function attachCardTilt() {
-  if (isTouchDevice) return;
-  document.querySelectorAll('.skill-card,.project-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5;
-      const y = (e.clientY - r.top) / r.height - .5;
-      card.style.transform = 'translateY(-6px) rotateX(' + (-y * 4) + 'deg) rotateY(' + (x * 4) + 'deg)';
-    });
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-  });
-}
-attachCardTilt();
-
-/* ── BACK TO TOP ─────────────────────────────────────────────── */
-const btt = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  btt.classList.toggle('visible', window.scrollY > 400);
-}, { passive: true });
-btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
 /* ── HOVER FX (event-delegated, single listener) ─────────────── */
-const hoverFXText = ['fx-float', 'fx-shake', 'fx-scale', 'fx-skew', 'fx-color', 'fx-neon', 'fx-glitch', 'fx-bounce', 'fx-flip', 'fx-blur'];
-const hoverFXCard = ['fx-glow', 'fx-color', 'fx-scale', 'fx-glitch', 'fx-blur', 'fx-bounce'];
-const hoverFXTouch = ['fx-scale', 'fx-glow', 'fx-bounce'];
+/* Só nos títulos, e só efeitos sutis (sem brilho nem sombra).
+   Os cards usam apenas o hover do CSS: sobem 4px e a borda ganha a cor do tema. */
+const hoverFXText = ['fx-float', 'fx-color'];
+const hoverFXTouch = ['fx-color'];
 
-const FX_TEXT_SEL = 'h2,h3,.section-tag,.skill-cat,.exp-role,.card-label,.exp-company-name,.project-name,.edu-school,.lang-name,.footer-logo';
-const FX_CARD_SEL = '.skill-card,.project-card,.info-card,.exp-item,.contact-row,.stat-box';
+const FX_TEXT_SEL = 'h2,.section-tag,.skill-cat,.card-label,.exp-company-name,.project-name,.case-title,.edu-school,.lang-name,.footer-logo';
 
 function triggerHoverFX(el, pool) {
   if (el.dataset.fxActive) return;
@@ -341,67 +438,59 @@ function triggerHoverFX(el, pool) {
   setTimeout(() => { el.classList.remove(cls); delete el.dataset.fxActive; }, 500);
 }
 
-if (!isTouchDevice) {
+if (reduceMotion) {
+  /* sem efeitos de hover */
+} else if (!isTouchDevice) {
   document.addEventListener('mouseover', (e) => {
+    // dispara só ao ENTRAR no elemento, não a cada filho que o mouse cruza
     const textEl = e.target.closest(FX_TEXT_SEL);
-    if (textEl) { triggerHoverFX(textEl, hoverFXText); return; }
-    const cardEl = e.target.closest(FX_CARD_SEL);
-    if (cardEl) triggerHoverFX(cardEl, hoverFXCard);
+    if (textEl && !textEl.contains(e.relatedTarget)) triggerHoverFX(textEl, hoverFXText);
   }, { passive: true });
 } else {
   document.addEventListener('touchstart', (e) => {
-    const el = e.target.closest(FX_TEXT_SEL + ',' + FX_CARD_SEL);
+    const el = e.target.closest(FX_TEXT_SEL);
     if (el) triggerHoverFX(el, hoverFXTouch);
   }, { passive: true });
 }
 
-function attachHoverFXToCards() { /* handled by delegated listener */ }
+/* ── THEME TOGGLE ────────────────────────────────────────────── */
+/* As cores de cada tema estão no CSS (:root[data-theme="..."]).
+   O script inline do <head> aplica o tema salvo antes da página aparecer. */
+const THEMES = [
+  { id: 'purple', name: 'Purple' },
+  { id: 'matrix', name: 'Matrix' },
+  { id: 'cyber', name: 'Cyber' },
+  { id: 'amber', name: 'Amber' },
+];
+const themeBtn = document.getElementById('theme-toggle');
+const currentTheme = () => document.documentElement.dataset.theme || 'purple';
 
-/* ── AUTO THEME GLITCH ───────────────────────────────────────── */
-const themes = {
-  purple: {
-    '--accent': '#6d5ffa', '--accent2': '#a78bfa', '--bg': '#0b0d14', '--bg2': '#0f1219',
-    '--green': '#22d3a8', '--accent-glow': 'rgba(109,95,250,0.18)',
-    '--surface': '#141720', '--surface2': '#1a1e2c', '--border': '#1e2438',
-  },
-  matrix: {
-    '--accent': '#00ff41', '--accent2': '#39ff14', '--bg': '#060a06', '--bg2': '#090f09',
-    '--green': '#00ff41', '--accent-glow': 'rgba(0,255,65,0.14)',
-    '--surface': '#0a140a', '--surface2': '#0d190d', '--border': '#143314',
-  },
-  cyber: {
-    '--accent': '#ff2d78', '--accent2': '#00e5ff', '--bg': '#07000d', '--bg2': '#0a0012',
-    '--green': '#00e5ff', '--accent-glow': 'rgba(255,45,120,0.15)',
-    '--surface': '#110018', '--surface2': '#16002a', '--border': '#280048',
-  },
-  amber: {
-    '--accent': '#f59e0b', '--accent2': '#fbbf24', '--bg': '#0d0905', '--bg2': '#100c07',
-    '--green': '#34d399', '--accent-glow': 'rgba(245,158,11,0.15)',
-    '--surface': '#1a1209', '--surface2': '#1f160b', '--border': '#2d1f0e',
-  },
-};
+function applyTheme(id) {
+  if (id === 'purple') delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = id;
+  const t = THEMES.find(x => x.id === id) || THEMES[0];
+  if (themeBtn) {
+    themeBtn.setAttribute('aria-label', T.themeLabel(t.name));
+    themeBtn.title = T.themeLabel(t.name);
+  }
+}
 
-let currentTheme = 'purple';
-
-function autoThemeGlitch() {
-  const keys = Object.keys(themes).filter(k => k !== currentTheme);
-  currentTheme = keys[Math.floor(Math.random() * keys.length)];
+function switchTheme() {
+  const i = THEMES.findIndex(t => t.id === currentTheme());
+  const next = THEMES[(i + 1) % THEMES.length].id;
+  storage.set('np-theme', next);
+  if (reduceMotion) { applyTheme(next); return; }
 
   document.body.classList.add('theme-glitching');
-
   setTimeout(() => {
     document.body.classList.add('theme-changing');
-    const t = themes[currentTheme];
-    Object.entries(t).forEach(([k, v]) => document.documentElement.style.setProperty(k, v));
-
-    setTimeout(() => {
-      document.body.classList.remove('theme-changing', 'theme-glitching');
-      setTimeout(autoThemeGlitch, 28000 + Math.random() * 22000);
-    }, 900);
+    applyTheme(next);
+    setTimeout(() => document.body.classList.remove('theme-changing', 'theme-glitching'), 900);
   }, 150);
 }
 
-setTimeout(autoThemeGlitch, 32000 + Math.random() * 10000);
+applyTheme(currentTheme());
+if (themeBtn) themeBtn.addEventListener('click', switchTheme);
 
 /* ── EASTER EGG: MATRIX RAIN ─────────────────────────────────── */
 function matrixRain() {
@@ -418,11 +507,12 @@ function matrixRain() {
 
   requestAnimationFrame(() => { overlay.style.opacity = '1'; });
 
+  const theme = currentTheme();
   let frame = 0;
   const interval = setInterval(() => {
     ctx.fillStyle = 'rgba(0,0,0,0.06)';
     ctx.fillRect(0, 0, overlay.width, overlay.height);
-    ctx.fillStyle = currentTheme === 'matrix' ? '#39ff14' : (currentTheme === 'cyber' ? '#00e5ff' : '#00ff41');
+    ctx.fillStyle = theme === 'matrix' ? '#39ff14' : (theme === 'cyber' ? '#00e5ff' : '#00ff41');
     ctx.font = '14px monospace';
     drops.forEach((y, i) => {
       const char = chars[Math.floor(Math.random() * chars.length)];
@@ -443,6 +533,9 @@ function matrixRain() {
 function textScramble() {
   const glitchChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?';
   document.querySelectorAll('h2').forEach(el => {
+    if (el.dataset.scrambling) return;
+    el.dataset.scrambling = '1';
+    const originalHTML = el.innerHTML; // preserva o <em> colorido do título
     const original = el.textContent;
     let iterations = 0;
     const interval = setInterval(() => {
@@ -453,7 +546,8 @@ function textScramble() {
       }).join('');
       iterations += 0.4;
       if (iterations >= original.length) {
-        el.textContent = original;
+        el.innerHTML = originalHTML;
+        delete el.dataset.scrambling;
         clearInterval(interval);
       }
     }, 30);
@@ -490,7 +584,7 @@ function emojiBomb() {
   }
 }
 
-/* ── EASTER EGG: PARTY MODE (konami reward) ──────────────────── */
+/* ── EASTER EGG: PARTY MODE ──────────────────────────────────── */
 function partyMode() {
   let count = 0;
   const interval = setInterval(() => {
@@ -521,27 +615,29 @@ function partyMode() {
   }, 25);
 }
 
-/* ── EASTER EGG SCHEDULER ────────────────────────────────────── */
-const easterEggs = [matrixRain, textScramble, emojiBomb];
-function scheduleEasterEgg() {
-  setTimeout(() => {
-    easterEggs[Math.floor(Math.random() * easterEggs.length)]();
-    scheduleEasterEgg();
-  }, 95000 + Math.random() * 100000);
+/* ── EASTER EGGS: só sob demanda (Konami code ou botão do rodapé) ── */
+const easterEggs = [matrixRain, textScramble, emojiBomb, partyMode];
+let lastEgg = -1;
+function runEasterEgg() {
+  let i;
+  do { i = Math.floor(Math.random() * easterEggs.length); } while (i === lastEgg);
+  lastEgg = i;
+  easterEggs[i]();
 }
-scheduleEasterEgg();
 
-/* ── KONAMI CODE ─────────────────────────────────────────────── */
 let konamiSeq = [];
 const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 document.addEventListener('keydown', e => {
-  konamiSeq.push(e.key);
+  konamiSeq.push(e.key.length === 1 ? e.key.toLowerCase() : e.key);
   if (konamiSeq.length > KONAMI.length) konamiSeq.shift();
   if (konamiSeq.join(',') === KONAMI.join(',')) {
     konamiSeq = [];
-    partyMode();
+    runEasterEgg();
   }
 });
+
+const eggBtn = document.getElementById('footer-egg');
+if (eggBtn) eggBtn.addEventListener('click', runEasterEgg);
 
 /* ── FOOTER YEAR ─────────────────────────────────────────────── */
 const fyEl = document.getElementById('footer-year');

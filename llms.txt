@@ -1,0 +1,73 @@
+# Nicolas Popovicz
+
+> Senior Software Developer na Fruitfy (plataforma de pagamentos para negócios digitais). Desenvolvedor back-end com mais de 5 anos de experiência em PHP/Laravel e Node.js, focado em performance de banco de dados, filas e integrações de sistemas em produção. Mora em Curitiba, PR, Brasil. Aberto a novas oportunidades e a projetos freelance.
+
+English summary: Nicolas Popovicz is a Senior Software Developer at Fruitfy (a payments platform for digital businesses), based in Curitiba, Brazil. Back-end engineer with 5+ years in PHP/Laravel and Node.js, focused on database performance, queues and system integrations. Open to new opportunities and freelance work.
+
+## Contato
+
+- E-mail: nicolaspopovicz@gmail.com
+- WhatsApp / telefone: +55 41 98420-6797
+- LinkedIn: https://www.linkedin.com/in/nicolas-popovicz/
+- GitHub: https://github.com/NicolasPopovicz
+- Portfólio (português): https://nicolaspopovicz.github.io/
+- Portfolio (English): https://nicolaspopovicz.github.io/en/
+
+## Disponibilidade
+
+- Aberto a novas oportunidades e a projetos freelance de back-end.
+- Freelance: performance de banco de dados e de aplicações PHP/Laravel; integrações com ERPs, marketplaces e APIs de terceiros; filas, jobs e processamento em lote; APIs REST em PHP/Laravel ou Node.js.
+
+## Experiência
+
+### Fruitfy · Senior Software Developer (nov. 2026 – atual, remoto)
+
+Desenvolvimento back-end (PHP/Laravel) da plataforma de checkout, pagamentos (Pix, cartão, boleto e carteiras digitais), assinaturas e recebimentos de quem vende produtos digitais no Brasil e no exterior.
+
+### Stokki · Desenvolvedor Back-end Pleno (abr. 2026 – out. 2026, Curitiba, híbrido)
+
+WMS que opera como plataforma 3PL (fulfillment, estoque, pedidos, NF-e e integrações com marketplaces, ERPs e transportadoras), em PHP/Laravel e MariaDB, num sistema em produção com milhões de pedidos. 560 pull requests em cerca de 7 meses.
+
+Destaques de performance, medidos antes e depois:
+
+- Cockpit e Expedição: ações pesadas movidas para filas, consultas reescritas, índices e timeout nas integrações externas. Escolha de pedidos caiu de ~65 s para menos de 1 s.
+- Busca de pedidos: consultas de 15 a 47 s deixaram de percorrer a base inteira e passaram a usar índice, levando de 0,5 ms a 1,3 s.
+- Resumo diário por e-mail: de 5.201 para 23 consultas ao banco, ~24× mais rápido.
+- Exportação da auditoria: 713 mil linhas em 14 s com 111 MB de memória; antes passava de 1 GB e o processo morria.
+- Etiquetas de produto: 6.500 etiquetas em 3,5 s (antes ~55 s), arquivo 48% menor e fim das quedas por falta de memória.
+
+Também entregou: usuário com múltiplos armazéns e permissões, aviso de sessão aberta em outro aparelho, auditoria, reforço do isolamento multi-tenant e da proteção de credenciais; 54 entregas de integração (Magis5, Bling, Tiny, Omie, Magazord); Cross Docking, novas listagens, cadastro em massa por planilha e CNPJ alfanumérico; processo com SDD/BDD/TDD e estruturação do uso de IA no time (regras do projeto, agentes de revisão de PR e automações de triagem).
+
+Stack: PHP, Laravel, MariaDB, Redis, AWS, Docker.
+
+### Nexcore (Customer Experience by Selbetti) · Desenvolvedor Fullstack (mar. 2024 – abr. 2026, Curitiba, híbrido)
+
+Plataforma omnichannel corporativa. Resolveu memory leak crítico em serviço Node.js em produção; tuning de queries e de configuração de banco; full-stack com Laravel, Node.js e Angular; tempo real com WebSocket; VoIP com Asterisk; automação de mensagens via WhatsApp e Telegram; Docker, Kubernetes e Node-RED.
+
+### Procob S/A · Desenvolvedor Back-end (fev. 2023 – jan. 2024, Curitiba, presencial)
+
+Sistemas de análise de crédito. Autenticação multifator (2FA) com Symfony e Redis; web scraping para popular bases de consulta; Azure SSO (SAML); CI/CD com GitLab; filas com RabbitMQ; Docker.
+
+### Daju LTDA. · Analista de Desenvolvimento (fev. 2021 – fev. 2023, Curitiba, híbrido)
+
+Desenvolvimento web full-stack com PHP, Laravel, Node.js e MySQL; APIs REST; Clean Architecture e Clean Code; interfaces com HTML, CSS, JavaScript e TailwindCSS.
+
+## Skills
+
+- Linguagens: PHP, TypeScript, JavaScript
+- Frameworks: Laravel, Node.js, Symfony, Express.js, Angular, React, Vue
+- Bancos de dados: MariaDB, MySQL, PostgreSQL, Redis, MongoDB
+- Infraestrutura: Docker, AWS, Kubernetes, RabbitMQ, microsserviços, Linux
+- Arquitetura: SOLID, Clean Architecture, MVC, DDD, multi-tenant
+- Testes e métodos: PHPUnit, Jest, TDD, BDD, CI/CD, Scrum, Kanban
+
+## Formação
+
+- Cruzeiro do Sul: Graduação em Tecnologia (2024 – 2026)
+- SENAI: Técnico em Desenvolvimento de Sistemas Web (2019 – 2020)
+
+## Idiomas
+
+- Português: nativo
+- Inglês: avançado
+- Japonês: iniciante

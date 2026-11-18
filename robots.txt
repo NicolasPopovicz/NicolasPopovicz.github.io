@@ -1,4 +1,19 @@
+# Todo o site pode ser rastreado por buscadores e por crawlers de IA.
 User-agent: *
 Allow: /
 
-Sitemap: https://nicolaspopovicz.github.io/
+# Crawlers de IA liberados explicitamente (busca e respostas com citação)
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://nicolaspopovicz.github.io/sitemap.xml
