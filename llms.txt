@@ -1,22 +1,33 @@
 # Nicolas Popovicz
 
-> Senior Software Developer na Fruitfy (plataforma de pagamentos para negócios digitais). Desenvolvedor back-end com mais de 5 anos de experiência em PHP/Laravel e Node.js, focado em performance de banco de dados, filas e integrações de sistemas em produção. Mora em Curitiba, PR, Brasil. Aberto a novas oportunidades e a projetos freelance.
+> Senior Software Developer na Fruitfy (plataforma de pagamentos para negócios digitais). Desenvolvedor com mais de 5 anos de experiência, principalmente no back-end em PHP/Laravel e Node.js (performance de banco de dados, filas e integrações de sistemas em produção) e também no front-end com Angular e Vue.js. Mora em Curitiba, PR, Brasil. Aberto a novas oportunidades e a projetos freelance fullstack.
 
-English summary: Nicolas Popovicz is a Senior Software Developer at Fruitfy (a payments platform for digital businesses), based in Curitiba, Brazil. Back-end engineer with 5+ years in PHP/Laravel and Node.js, focused on database performance, queues and system integrations. Open to new opportunities and freelance work.
+English summary: Nicolas Popovicz is a Senior Software Developer at Fruitfy (a payments platform for digital businesses), based in Curitiba, Brazil. 5+ years of experience, mainly back-end in PHP/Laravel and Node.js (database performance, queues and system integrations), and also front-end with Angular and Vue.js. Open to new opportunities and full-stack freelance work.
 
 ## Contato
 
 - E-mail: nicolaspopovicz@gmail.com
 - WhatsApp / telefone: +55 41 98420-6797
-- LinkedIn: https://www.linkedin.com/in/nicolas-popovicz/
-- GitHub: https://github.com/NicolasPopovicz
-- Portfólio (português): https://nicolaspopovicz.github.io/
-- Portfolio (English): https://nicolaspopovicz.github.io/en/
+- [LinkedIn](https://www.linkedin.com/in/nicolas-popovicz/)
+- [GitHub](https://github.com/NicolasPopovicz)
+- [Portfólio (português)](https://nicolaspopovicz.github.io/)
+- [Portfolio (English)](https://nicolaspopovicz.github.io/en/)
+
+## Seções do portfólio
+
+- [Sobre](https://nicolaspopovicz.github.io/#sobre): resumo, stack e contatos
+- [Cases](https://nicolaspopovicz.github.io/#cases): cases de performance com antes e depois medidos
+- [Experiência](https://nicolaspopovicz.github.io/#experience): histórico profissional
+- [Skills](https://nicolaspopovicz.github.io/#skills): tecnologias por categoria
+- [Projetos](https://nicolaspopovicz.github.io/#projects): repositórios públicos no GitHub
+- [Formação](https://nicolaspopovicz.github.io/#formacao): formação acadêmica e idiomas
+- [Contato](https://nicolaspopovicz.github.io/#contato): disponibilidade e serviços de freelance
 
 ## Disponibilidade
 
-- Aberto a novas oportunidades e a projetos freelance de back-end.
-- Freelance: performance de banco de dados e de aplicações PHP/Laravel; integrações com ERPs, marketplaces e APIs de terceiros; filas, jobs e processamento em lote; APIs REST em PHP/Laravel ou Node.js.
+- Aberto a novas oportunidades e a projetos freelance fullstack.
+- Freelance back-end: performance de banco de dados e de aplicações PHP/Laravel; integrações com ERPs, marketplaces e APIs de terceiros; filas, jobs e processamento em lote; APIs REST em PHP/Laravel ou Node.js.
+- Freelance front-end e design: aplicações em Angular e Vue.js (e React) com TypeScript; interfaces responsivas com HTML5, CSS3 e TailwindCSS; design de interfaces e protótipos no Figma.
 
 ## Experiência
 

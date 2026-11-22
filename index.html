@@ -11,7 +11,7 @@
         content="Senior Software Developer na Fruitfy, em Curitiba. 5+ anos de back-end com PHP/Laravel e Node.js, com foco em performance. Aberto a oportunidades e freelas." />
     <meta name="author" content="Nicolas Popovicz" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#0b0d14" />
+    <meta name="theme-color" content="#08090a" />
     <link rel="canonical" href="https://nicolaspopovicz.github.io/" />
     <!-- Google Search Console (propriedade de prefixo de URL) -->
     <meta name="google-site-verification" content="pbWQgOI-cypyAJriHrUBa00dptGTBj7xVBlvU-o2P5k" />
@@ -28,7 +28,7 @@
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Nicolas Popovicz — Senior Software Developer, back-end PHP, Laravel e Node.js" />
+    <meta property="og:image:alt" content="Monitor CRT retrô com o nome Nicolas Popovicz: Senior Software Developer, back-end PHP, Laravel e Node.js e front-end Angular e Vue.js" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:site_name" content="Nicolas Popovicz" />
@@ -39,7 +39,7 @@
     <meta name="twitter:description"
         content="Back-end com PHP/Laravel e Node.js. Senior Software Developer na Fruitfy. Aberto a oportunidades e freelas." />
     <meta name="twitter:image" content="https://nicolaspopovicz.github.io/img/og-image.png" />
-    <meta name="twitter:image:alt" content="Nicolas Popovicz — Senior Software Developer, back-end PHP, Laravel e Node.js" />
+    <meta name="twitter:image:alt" content="Monitor CRT retrô com o nome Nicolas Popovicz: Senior Software Developer, back-end PHP, Laravel e Node.js e front-end Angular e Vue.js" />
 
     <!-- Structured Data (WebSite + Person) ─────────────────────── -->
     <script type="application/ld+json">
@@ -85,7 +85,7 @@
                         "https://www.linkedin.com/in/nicolas-popovicz/",
                         "https://github.com/NicolasPopovicz"
                     ],
-                    "knowsAbout": ["PHP", "Laravel", "Node.js", "TypeScript", "MariaDB", "MySQL", "PostgreSQL", "Redis", "Docker", "AWS", "Performance de banco de dados", "Filas e processamento assíncrono", "Integrações com ERPs e marketplaces"]
+                    "knowsAbout": ["PHP", "Laravel", "Node.js", "TypeScript", "Angular", "Vue.js", "MariaDB", "MySQL", "PostgreSQL", "Redis", "Docker", "AWS", "Performance de banco de dados", "Filas e processamento assíncrono", "Integrações com ERPs e marketplaces"]
                 }
             ]
         }
@@ -96,631 +96,510 @@
     <link rel="alternate" hreflang="en" href="https://nicolaspopovicz.github.io/en/" />
     <link rel="alternate" hreflang="x-default" href="https://nicolaspopovicz.github.io/" />
 
-    <!-- Favicons ────────────────────────────────────────────────── -->
+    <!-- Favicons (CRT retrô em pixel art) ───────────────────────── -->
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="img/favicon-48.png" type="image/png" sizes="48x48" />
     <link rel="icon" href="img/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
 
-    <!-- Fonts ──────────────────────────────────────────────────── -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
-        rel="stylesheet" />
+    <!-- Fonte: subset da Cascadia Code hospedado no repo (fonts/) ── -->
+    <link rel="preload" href="fonts/terminal-np-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="fonts/terminal-np-bold.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Styles ─────────────────────────────────────────────────── -->
-    <link rel="stylesheet" href="css/portfolio.css" />
-
-    <!-- Aplica o tema salvo antes de pintar a página e pula o loader em visitas repetidas
-         na mesma aba ou com "reduzir movimento" ativo -->
+    <!-- Antes de pintar: detecta o sistema (visual do terminal), o perfil de cores salvo
+         e a aba pedida no #hash, para a página já nascer no estado certo -->
     <script>
-        try {
-            var t = localStorage.getItem('np-theme');
-            if (t && t !== 'purple') document.documentElement.dataset.theme = t;
-        } catch (e) { /* storage bloqueado: usa o tema padrão */ }
-        try {
-            if (sessionStorage.getItem('np-booted') === '1' ||
-                window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.documentElement.classList.add('no-loader');
+        (function () {
+            var d = document.documentElement, os, q, pr;
+            d.classList.add('js');
+            var p = ((navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '') + ' ' + navigator.userAgent;
+            d.dataset.osAuto = /Win/.test(p) ? 'win' : (/Mac|iPhone|iPad|iPod/.test(p) ? 'mac' : 'linux');
+            // ?os=mac|win|linux força outro visual; sem o parâmetro, vale sempre o sistema detectado
+            try { q = new URLSearchParams(location.search).get('os'); } catch (e) { }
+            os = /^(mac|win|linux)$/.test(q) ? q : d.dataset.osAuto;
+            d.dataset.os = os;
+            try { pr = localStorage.getItem('np-profile'); } catch (e) { }
+            d.dataset.profile = pr || { mac: 'tokyonight', win: 'onehalf', linux: 'ubuntu' }[os];
+            var h = location.hash.slice(1);
+            // âncoras antigas e as da versão em inglês apontam para os mesmos ids de aba
+            h = { hero: 'sobre', about: 'sobre', education: 'formacao', contact: 'contato', experiencia: 'experience', projetos: 'projects' }[h] || h;
+            d.dataset.tab = /^(sobre|cases|experience|skills|projects|formacao|contato)$/.test(h) ? h : 'sobre';
+            if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                d.classList.add('boot');
+                // tela de login do sistema: só na primeira visita da sessão (?login força, para testar)
+                var seen = null;
+                try { seen = sessionStorage.getItem('np-booted'); sessionStorage.setItem('np-booted', '1'); } catch (e) { }
+                if (!seen || /[?&]login\b/.test(location.search)) d.classList.add('locked', 'win-closed');
             }
-        } catch (e) { /* storage bloqueado: mantém o loader */ }
+        })();
     </script>
-    <noscript>
-        <style>
-            #loader { display: none; }
-            .reveal, .reveal-left { opacity: 1; transform: none; }
-            .project-skeleton { display: none; }
-        </style>
-    </noscript>
+
+    <!-- Estilos e comportamento: arquivos compartilhados com a versão em inglês (/en/) -->
+    <link rel="stylesheet" href="css/portfolio.css" />
+    <script src="js/portfolio.js" defer></script>
 </head>
 
 <body>
+    <canvas id="bg" aria-hidden="true"></canvas>
 
-    <div class="progress-bar" id="progress" aria-hidden="true"></div>
-
-    <!-- NAV ──────────────────────────────────────────────────────── -->
-    <nav id="nav" aria-label="Principal">
-        <a href="#hero" class="nav-logo">
-            <span class="nav-logo-dot" aria-hidden="true"></span>
-            Nicolas Popovicz
-        </a>
-        <div class="nav-links" id="nav-links">
-            <a href="#cases">Cases</a>
-            <a href="#experience">Experiência</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projetos</a>
-            <a href="#contato">Contato</a>
-        </div>
-        <div class="nav-actions">
-            <a href="en/" class="nav-icon-btn" hreflang="en" lang="en" title="Read in English"
-                aria-label="Read this page in English">EN</a>
-            <button type="button" class="nav-icon-btn" id="theme-toggle" aria-label="Trocar tema de cores"
-                title="Trocar tema de cores">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" />
-                </svg>
-            </button>
-            <a href="#contato" class="nav-cta">Falar comigo</a>
-            <button type="button" class="nav-icon-btn nav-burger" id="nav-burger" aria-label="Abrir menu"
-                aria-expanded="false" aria-controls="nav-links">
-                <svg class="ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" aria-hidden="true">
-                    <path d="M4 7h16M4 12h16M4 17h16" />
-                </svg>
-                <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" aria-hidden="true">
-                    <path d="M6 6l12 12M18 6L6 18" />
-                </svg>
-            </button>
-        </div>
-    </nav>
-
-    <!-- LOADER ───────────────────────────────────────────────────── -->
-    <div id="loader" aria-hidden="true">
-        <div class="loader-terminal">
-            <div class="loader-bar">
-                <div class="loader-dot ld1"></div>
-                <div class="loader-dot ld2"></div>
-                <div class="loader-dot ld3"></div>
-                <div class="loader-title">~/portfolio/nicolas $ build</div>
+    <!-- TELA DE LOGIN: uma por sistema, o JS "digita" a senha e abre o terminal sozinho ── -->
+    <div class="lockscreen" id="login" aria-hidden="true">
+        <div class="lg lg-mac">
+            <!-- fundo grafite: faixas arredondadas concêntricas com borda iluminada -->
+            <svg class="mac-wall" viewBox="0 0 1600 1000" preserveAspectRatio="xMinYMid slice">
+                <defs>
+                    <filter id="mw-sh" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2800" height="2200"><feGaussianBlur stdDeviation="26" /></filter>
+                    <filter id="mw-in" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2800" height="2200"><feGaussianBlur stdDeviation="20" /></filter>
+                    <path id="mw-a" d="M-300 230H1060A240 240 0 0 1 1060 710H640A240 240 0 0 0 400 950V1400" />
+                    <path id="mw-b" d="M1900 1080H1700A200 200 0 0 1 1500 880V-300" />
+                </defs>
+                <g fill="none" stroke-linejoin="round">
+                    <use href="#mw-b" stroke="#000" stroke-width="440" filter="url(#mw-sh)" />
+                    <use href="#mw-b" stroke="#b9bcc6" stroke-width="380" />
+                    <use href="#mw-b" stroke="#4a4c55" stroke-width="377" />
+                    <use href="#mw-b" stroke="#040405" stroke-width="290" filter="url(#mw-in)" />
+                    <use href="#mw-a" stroke="#000" stroke-width="540" filter="url(#mw-sh)" />
+                    <use href="#mw-a" stroke="#b9bcc6" stroke-width="480" />
+                    <use href="#mw-a" stroke="#4a4c55" stroke-width="477" />
+                    <use href="#mw-a" stroke="#040405" stroke-width="390" filter="url(#mw-in)" />
+                    <use href="#mw-a" stroke="#000" stroke-width="300" filter="url(#mw-sh)" opacity=".9" />
+                    <use href="#mw-a" stroke="#b9bcc6" stroke-width="250" />
+                    <use href="#mw-a" stroke="#4a4c55" stroke-width="247" />
+                    <use href="#mw-a" stroke="#040405" stroke-width="170" filter="url(#mw-in)" />
+                </g>
+            </svg>
+            <div class="mac-menu">
+                <span class="mac-kbd">Brasileiro <svg width="17" height="12" viewBox="0 0 17 12"><rect x=".6" y=".6" width="15.8" height="10.8" rx="2" /><path d="M3.5 4h1M6.5 4h1M9.5 4h1M12.5 4h1M3.5 6.5h1M6.5 6.5h1M9.5 6.5h1M12.5 6.5h1M5 9h7" stroke-linecap="round" /></svg></span>
+                <span class="mac-batt" data-batt></span>
+                <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.4 1 4.2a10 10 0 0 1 14 0z" fill="currentColor" stroke="none" /></svg>
             </div>
-            <div class="loader-lines" id="loaderLines"></div>
-            <div class="loader-prog-wrap">
-                <div class="loader-prog" id="loaderProg"></div>
+            <div class="mac-clock"><p class="lg-date" data-clock="macdate"></p><p class="lg-time" data-clock="time"></p></div>
+            <div class="mac-user">
+                <div class="lg-avatar"><img src="img/favicon.svg" alt="" width="40" height="40" /></div>
+                <div class="mac-row">
+                    <div class="lg-pass"><span class="lg-dots"></span><span class="lg-ph">Digite a Senha</span><i class="mac-go"><svg viewBox="0 0 18 18"><path d="M5 9h8M9.5 5.5 13 9l-3.5 3.5" /></svg></i></div>
+                    <i class="mac-help">?</i>
+                </div>
+                <p class="mac-hint">Use o Touch ID ou Digite a Senha</p>
+            </div>
+        </div>
+        <div class="lg lg-win">
+            <!-- fundo: "flor" de pétalas azuis com bordas nítidas -->
+            <svg class="win-wall" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <radialGradient id="wb-bg" cx=".5" cy=".95" r=".85"><stop offset="0" stop-color="#1d56d6" /><stop offset=".42" stop-color="#0b2672" /><stop offset="1" stop-color="#040b26" /></radialGradient>
+                    <linearGradient id="wb-a" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#0b3fc0" /><stop offset=".55" stop-color="#3d8bff" /><stop offset="1" stop-color="#cfe7ff" /></linearGradient>
+                    <linearGradient id="wb-b" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#071f78" /><stop offset=".6" stop-color="#2a68ea" /><stop offset="1" stop-color="#93c4ff" /></linearGradient>
+                    <path id="wb-p" d="M0 0C160-70 240-340 0-580C-240-340-160-70 0 0Z" />
+                </defs>
+                <rect width="1600" height="1000" fill="url(#wb-bg)" />
+                <g transform="translate(800 1030)" stroke="#d6ebff" stroke-opacity=".38" stroke-width="1.5">
+                    <use href="#wb-p" fill="url(#wb-b)" transform="rotate(-66) scale(.86)" />
+                    <use href="#wb-p" fill="url(#wb-b)" transform="rotate(66) scale(.86)" />
+                    <use href="#wb-p" fill="url(#wb-a)" transform="rotate(-40) scale(.98)" fill-opacity=".9" />
+                    <use href="#wb-p" fill="url(#wb-a)" transform="rotate(40) scale(.98)" fill-opacity=".9" />
+                    <use href="#wb-p" fill="url(#wb-b)" transform="rotate(-15) scale(1.08)" fill-opacity=".92" />
+                    <use href="#wb-p" fill="url(#wb-b)" transform="rotate(15) scale(1.08)" fill-opacity=".92" />
+                    <use href="#wb-p" fill="url(#wb-a)" transform="scale(1.1)" fill-opacity=".88" />
+                </g>
+            </svg>
+            <div class="win-lock"><p class="lg-time" data-clock="time"></p><p class="lg-date" data-clock="date"></p></div>
+            <div class="win-signin">
+                <div class="lg-avatar"><img src="img/favicon.svg" alt="" width="40" height="40" /></div>
+                <p class="lg-name">Nicolas Popovicz</p>
+                <div class="lg-pass"><span class="lg-dots"></span><span class="lg-ph">Senha</span></div>
+                <p class="win-welcome"><span class="win-spin"><i></i><i></i><i></i><i></i><i></i></span>Bem-vindo</p>
+            </div>
+        </div>
+        <div class="lg lg-linux">
+            <div class="gdm-bar">
+                <span></span><span data-clock="short"></span>
+                <span class="gdm-icons">
+                    <svg viewBox="0 0 16 16"><path d="M1.5 6.2a9.5 9.5 0 0 1 13 0M4.2 9a5.6 5.6 0 0 1 7.6 0M6.8 11.8a1.8 1.8 0 0 1 2.4 0" /></svg>
+                    <svg viewBox="0 0 16 16"><path d="M2 6h3l4-3v10l-4-3H2zM11.6 5.3a3.8 3.8 0 0 1 0 5.4" /></svg>
+                    <svg viewBox="0 0 16 16"><path d="M8 1.8v6M4.4 4a5.2 5.2 0 1 0 7.2 0" /></svg>
+                </span>
+            </div>
+            <div class="gdm-user">
+                <div class="lg-avatar"><img src="img/favicon.svg" alt="" width="40" height="40" /></div>
+                <p class="lg-name">Nicolas Popovicz</p>
+                <div class="lg-pass"><span class="lg-dots"></span><span class="lg-ph">Senha</span></div>
             </div>
         </div>
     </div>
 
-    <!-- BACKGROUND PARTICLES (full page, fixed) ──────────────────── -->
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="win" id="win">
 
-    <!-- CUSTOM CURSOR ────────────────────────────────────────────── -->
-    <div id="cursor" aria-hidden="true"></div>
-    <div id="cursor-ring" aria-hidden="true"></div>
-
-    <main>
-
-        <!-- HERO ─────────────────────────────────────────────────────── -->
-        <div id="hero">
-            <div class="hero-bg-orb orb1" aria-hidden="true"></div>
-            <div class="hero-bg-orb orb2" aria-hidden="true"></div>
-            <div class="hero-grid">
-                <div>
-                    <a href="#contato" class="hero-available">
-                        <span class="hero-available-dot" aria-hidden="true"></span>
-                        Aberto a oportunidades e freelas
-                    </a>
-                    <h1 class="hero-name"><span>Nicolas<br />Popovicz</span></h1>
-                    <p class="hero-role"><span id="typeTarget">Senior Software Developer @ Fruitfy</span><span
-                            class="type-cursor" aria-hidden="true"></span></p>
-                    <p class="hero-desc">Senior Software Developer na <strong>Fruitfy</strong>, plataforma de pagamentos
-                        para negócios digitais. Trabalho com back-end em PHP/Laravel e Node.js, focado em performance,
-                        filas e integrações de sistemas em produção. Na Stokki, levei consultas de dezenas de segundos
-                        para ~1 s numa base com milhões de pedidos.</p>
-                    <div class="hero-actions">
-                        <a href="#contato" class="btn-primary">Falar comigo</a>
-                        <a href="#cases" class="btn-secondary">Ver cases</a>
-                    </div>
+        <!-- BARRA DA JANELA: macOS (Terminal.app), Windows Terminal ou GNOME Terminal ──── -->
+        <header class="top" id="top">
+            <div class="tl">
+                <div class="lights">
+                    <button type="button" class="l l-close" data-act="close" data-g="×" aria-label="Encerrar sessão"></button>
+                    <button type="button" class="l l-min" data-act="min" data-g="−" aria-label="Minimizar"></button>
+                    <button type="button" class="l l-max" data-act="max" data-g="+" aria-label="Maximizar"></button>
                 </div>
-                <aside class="hero-card" aria-label="Resumo e contatos">
-                    <div class="card-label">Overview</div>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <div class="stat-num"><span data-years-since="2021-02">5</span>+</div>
-                            <div class="stat-label">Anos de exp.</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-num">560</div>
-                            <div class="stat-label">PRs em 7 meses</div>
-                        </div>
-                    </div>
-                    <div class="contact-list">
-                        <a href="mailto:nicolaspopovicz@gmail.com" class="contact-row">
-                            <div class="contact-ico" aria-hidden="true">@</div>
-                            nicolaspopovicz@gmail.com
-                        </a>
-                        <a href="https://wa.me/5541984206797?text=Ol%C3%A1%2C%20Nicolas%21%20Encontrei%20seu%20contato%20pelo%20seu%20site%20e%20gostaria%20de%20conversar%20para%20me%20informar%20sobre%20" target="_blank" rel="noopener noreferrer" class="contact-row">
-                            <div class="contact-ico" aria-hidden="true">wa</div>
-                            +55 41 98420-6797
-                        </a>
-                        <a href="https://linkedin.com/in/nicolas-popovicz" target="_blank" rel="noopener noreferrer"
-                            class="contact-row">
-                            <div class="contact-ico" aria-hidden="true">in</div>
-                            nicolas-popovicz
-                        </a>
-                        <a href="https://github.com/NicolasPopovicz" target="_blank" rel="noopener noreferrer"
-                            class="contact-row">
-                            <div class="contact-ico" aria-hidden="true">gh</div>
-                            NicolasPopovicz
-                        </a>
-                        <div class="contact-row">
-                            <div class="contact-ico" aria-hidden="true">BR</div>
-                            Curitiba, Brasil
-                        </div>
-                    </div>
-                </aside>
+                <button type="button" class="hb-new" data-act="new" aria-label="Nova aba">+</button>
             </div>
-            <div class="scroll-hint" aria-hidden="true">
-                <div class="scroll-line"></div>
-                <span>SCROLL</span>
+            <div class="wtitle" id="wtitle" aria-hidden="true">nicolas — -zsh</div>
+            <div class="tr">
+                <a class="tool" href="en/" hreflang="en" lang="en" title="Read in English" aria-label="EN: read this page in English">EN</a>
+                <button type="button" class="tool" id="profile-btn" data-act="profile" aria-label="Trocar perfil de cores" title="Trocar perfil de cores">◐</button>
+                <div class="caps">
+                    <button type="button" class="cap cap-min" data-act="min" aria-label="Minimizar"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M0 5.5h10" /></svg></button>
+                    <button type="button" class="cap cap-max" data-act="max" aria-label="Maximizar"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x=".5" y=".5" width="9" height="9" /></svg></button>
+                    <button type="button" class="cap cap-close" data-act="close" aria-label="Encerrar sessão"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M.5 .5l9 9M9.5 .5l-9 9" /></svg></button>
+                </div>
             </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- CASES ────────────────────────────────────────────────────── -->
-        <section id="cases">
-            <div class="reveal">
-                <div class="section-tag">Cases</div>
-                <h2 class="section-title">Performance <em>em produção</em></h2>
-                <p class="section-lead">Três problemas reais que resolvi na Stokki, um WMS com milhões de pedidos,
-                    medidos antes e depois.</p>
+            <div class="tabrow">
+            <nav class="tabs" id="tabs" aria-label="Seções">
+                <a class="tab on" href="#sobre" aria-controls="sobre"><span class="ti" aria-hidden="true"></span><span class="tt">sobre</span><span class="tx" aria-hidden="true"></span></a>
+                <a class="tab" href="#cases" aria-controls="cases"><span class="ti" aria-hidden="true"></span><span class="tt">cases</span><span class="tx" aria-hidden="true"></span></a>
+                <a class="tab" href="#experience" aria-controls="experience"><span class="ti" aria-hidden="true"></span><span class="tt">experiência</span><span class="tx" aria-hidden="true"></span></a>
+                <a class="tab" href="#skills" aria-controls="skills"><span class="ti" aria-hidden="true"></span><span class="tt">skills</span><span class="tx" aria-hidden="true"></span></a>
+                <a class="tab" href="#projects" aria-controls="projects"><span class="ti" aria-hidden="true"></span><span class="tt">projetos</span><span class="tx" aria-hidden="true"></span></a>
+                <a class="tab" href="#formacao" aria-controls="formacao"><span class="ti" aria-hidden="true"></span><span class="tt">formação</span><span class="tx" aria-hidden="true"></span></a>
+                <a class="tab" href="#contato" aria-controls="contato"><span class="ti" aria-hidden="true"></span><span class="tt">contato</span><span class="tx" aria-hidden="true"></span></a>
+            </nav>
+            <button type="button" class="tab-new" data-act="new" aria-label="Nova aba">+</button>
             </div>
-            <div class="cases-grid">
-                <article class="case-card reveal">
-                    <div class="case-result">
-                        <span class="case-before">~65 s</span>
-                        <span class="case-arrow" aria-hidden="true">→</span>
-                        <span class="case-after">&lt;1 s</span>
-                    </div>
-                    <h3 class="case-title">Escolha de pedidos no Cockpit</h3>
-                    <dl class="case-body">
-                        <div>
-                            <dt>Problema</dt>
-                            <dd>Escolher pedidos no Cockpit levava cerca de 65 s, numa base com milhões de pedidos.
-                            </dd>
-                        </div>
-                        <div>
-                            <dt>O que fiz</dt>
-                            <dd>No Cockpit e na Expedição, movi as ações pesadas para filas, reescrevi consultas,
-                                criei índices e coloquei timeout nas integrações externas.</dd>
-                        </div>
-                        <div>
-                            <dt>Resultado</dt>
-                            <dd>A escolha de pedidos passou a levar menos de 1 s.</dd>
-                        </div>
-                    </dl>
-                    <div class="case-tags"><span>Laravel</span><span>Filas</span><span>MariaDB</span></div>
-                </article>
+        </header>
 
-                <article class="case-card reveal" style="transition-delay:0.08s">
-                    <div class="case-result">
-                        <span class="case-before">15–47 s</span>
-                        <span class="case-arrow" aria-hidden="true">→</span>
-                        <span class="case-after">≤1,3 s</span>
-                    </div>
-                    <h3 class="case-title">Busca de pedidos</h3>
-                    <dl class="case-body">
-                        <div>
-                            <dt>Problema</dt>
-                            <dd>As consultas da busca de pedidos levavam de 15 a 47 s porque percorriam a base
-                                inteira.</dd>
-                        </div>
-                        <div>
-                            <dt>O que fiz</dt>
-                            <dd>Ajustei as consultas para usar índice em vez de varrer a tabela de pedidos.</dd>
-                        </div>
-                        <div>
-                            <dt>Resultado</dt>
-                            <dd>Respostas entre 0,5 ms e 1,3 s.</dd>
-                        </div>
-                    </dl>
-                    <div class="case-tags"><span>MariaDB</span><span>Índices</span><span>SQL</span></div>
-                </article>
+        <div class="body">
+            <main class="screen" id="screen" tabindex="-1">
 
-                <article class="case-card reveal" style="transition-delay:0.16s">
-                    <div class="case-result">
-                        <span class="case-before">5.201</span>
-                        <span class="case-arrow" aria-hidden="true">→</span>
-                        <span class="case-after">23</span>
-                        <span class="case-unit">consultas</span>
-                    </div>
-                    <h3 class="case-title">Resumo diário por e-mail</h3>
-                    <dl class="case-body">
-                        <div>
-                            <dt>Problema</dt>
-                            <dd>Para montar o resumo diário enviado por e-mail, o sistema fazia 5.201 consultas ao
-                                banco.</dd>
+                <!-- ═══ 1 · SOBRE ═══════════════════════════════════════════ -->
+                <section class="panel" id="sobre" data-cmd="nicolas">
+                    <p class="ln login" aria-hidden="true"><span class="os-mac">Last login: <span class="lastlog">Sun Nov 22 09:41:07</span> on ttys001</span><span class="os-win">PowerShell 7.4.6</span></p>
+
+                    <div class="neo">
+<pre class="banner" aria-hidden="true">███╗   ██╗██╗ ██████╗ ██████╗ ██╗      █████╗ ███████╗
+████╗  ██║██║██╔════╝██╔═══██╗██║     ██╔══██╗██╔════╝
+██╔██╗ ██║██║██║     ██║   ██║██║     ███████║███████╗
+██║╚██╗██║██║██║     ██║   ██║██║     ██╔══██║╚════██║
+██║ ╚████║██║╚██████╗╚██████╔╝███████╗██║  ██║███████║
+╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝
+██████╗  ██████╗ ██████╗  ██████╗ ██╗   ██╗██╗ ██████╗███████╗
+██╔══██╗██╔═══██╗██╔══██╗██╔═══██╗██║   ██║██║██╔════╝╚══███╔╝
+██████╔╝██║   ██║██████╔╝██║   ██║██║   ██║██║██║       ███╔╝
+██╔═══╝ ██║   ██║██╔═══╝ ██║   ██║╚██╗ ██╔╝██║██║      ███╔╝
+██║     ╚██████╔╝██║     ╚██████╔╝ ╚████╔╝ ██║╚██████╗███████╗
+╚═╝      ╚═════╝ ╚═╝      ╚═════╝   ╚═══╝  ╚═╝ ╚═════╝╚══════╝</pre>
+                        <div class="nf">
+                            <h1 class="nf-t">Nicolas Popovicz</h1>
+                            <p class="dim" aria-hidden="true">----------------</p>
+                            <p><span class="k">Cargo</span>: Senior Software Developer</p>
+                            <p><span class="k">Empresa</span>: Fruitfy</p>
+                            <p><span class="k">Back-end</span>: PHP · Laravel · Node.js</p>
+                            <p><span class="k">Front-end</span>: Angular · Vue.js · React · TailwindCSS</p>
+                            <p><span class="k">Foco</span>: Back-end (performance, filas e integrações) · Front-end</p>
+                            <p><span class="k">Uptime</span>: <span data-years-since="2021-02">5</span>+ anos construindo sistemas em produção</p>
+                            <p><span class="k">PRs</span>: 560 em 7 meses</p>
+                            <p><span class="k">Local</span>: Curitiba, Brasil</p>
+                            <p><span class="k">Idiomas</span>: Português · Inglês · Japonês</p>
+                            <p><span class="k">Status</span>: <a href="#contato" class="c-g">● Aberto a oportunidades e freelas</a></p>
+                            <p class="pal" aria-hidden="true"><i style="background:var(--red)"></i><i style="background:var(--green)"></i><i style="background:var(--yellow)"></i><i style="background:var(--blue)"></i><i style="background:var(--magenta)"></i><i style="background:var(--cyan)"></i><i style="background:var(--fg)"></i><i style="background:var(--dim)"></i></p>
                         </div>
-                        <div>
-                            <dt>O que fiz</dt>
-                            <dd>Reestruturei a geração do resumo para buscar os dados em 23 consultas.</dd>
-                        </div>
-                        <div>
-                            <dt>Resultado</dt>
-                            <dd>Resumo cerca de 24× mais rápido.</dd>
-                        </div>
-                    </dl>
-                    <div class="case-tags"><span>Laravel</span><span>MariaDB</span></div>
-                </article>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- EXPERIENCE ───────────────────────────────────────────────── -->
-        <section id="experience">
-            <div class="reveal">
-                <div class="section-tag">Experiência</div>
-                <h2 class="section-title">Histórico <em>Profissional</em></h2>
-            </div>
-            <div class="exp-list">
-
-                <article class="exp-item reveal">
-                    <div>
-                        <div class="exp-badge exp-current">ATUAL</div>
-                        <h3 class="exp-company-name">Fruitfy</h3>
-                        <div class="exp-period">Nov 2026 – Presente</div>
-                        <div class="exp-location">Remoto</div>
-                        <div class="exp-stack">PHP · Laravel</div>
                     </div>
-                    <div>
-                        <div class="exp-role">Senior Software Developer</div>
-                        <div class="exp-role-sub">Plataforma de pagamentos para negócios digitais</div>
-                        <p class="exp-summary">Desenvolvimento back-end da plataforma de checkout, pagamentos (Pix,
-                            cartão, boleto e carteiras digitais), assinaturas e recebimentos de quem vende produtos
-                            digitais, como cursos, mentorias, comunidades e SaaS, no Brasil e no exterior.</p>
-                    </div>
-                </article>
+                    <!-- fica fora do --help: aparece já no primeiro frame (bom para o LCP) -->
+                    <p class="desc motd">Senior Software Developer na <strong>Fruitfy</strong>, plataforma de pagamentos para negócios
+                        digitais. Trabalho principalmente com back-end em PHP/Laravel e Node.js, focado em performance, filas e
+                        integrações de sistemas em produção, e também com front-end em Angular e Vue.js. Na Stokki, levei consultas
+                        de dezenas de segundos para ~1 s numa base com milhões de pedidos.</p>
 
-                <article class="exp-item reveal">
-                    <div>
-                        <div class="exp-badge">ANTERIOR</div>
-                        <h3 class="exp-company-name">Stokki</h3>
-                        <div class="exp-period">Abr 2026 – Out 2026</div>
-                        <div class="exp-location">Curitiba · Híbrido</div>
-                        <div class="exp-stack">PHP · Laravel · MariaDB<br>Redis · AWS · Docker</div>
-                    </div>
-                    <div>
-                        <div class="exp-role">Dev Back-end Pleno</div>
-                        <div class="exp-role-sub">WMS e plataforma 3PL · fulfillment, estoque, pedidos, NF-e e
-                            integrações</div>
-                        <p class="exp-summary">560 pull requests em cerca de 7 meses, num sistema em produção com milhões
-                            de pedidos. Além dos <a href="#cases" class="inline-link">cases de performance</a>, medidos
-                            antes e depois:</p>
-                        <div class="exp-metrics">
-                            <div class="exp-metric">
-                                <div class="exp-metric-num">1 GB → 111 MB</div>
-                                <div class="exp-metric-label">Exportação da auditoria: 713 mil linhas em 14 s, onde
-                                    antes o processo morria</div>
+                    <p class="ln cmdline" aria-hidden="true"><span class="ps1"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span> <span class="typed">nicolas --help</span></p>
+                    <div class="out">
+                        <p class="usage"><span class="u">Uso:</span> nicolas <i>&lt;comando&gt;</i> [<span class="flag">--opções</span>]</p>
+                        <div class="cols">
+                            <div class="col opts">
+                                <p class="lbl">Comandos:</p>
+                                <p class="opt" style="--k:12ch"><a class="k cmd" href="#cases">cases</a><span>Performance em produção · 3 cases medidos antes e depois</span></p>
+                                <p class="opt" style="--k:12ch"><a class="k cmd" href="#experience">experiencia</a><span>Histórico profissional · 5 empresas desde 2021</span></p>
+                                <p class="opt" style="--k:12ch"><a class="k cmd" href="#skills">skills</a><span>Tecnologias &amp; ferramentas</span></p>
+                                <p class="opt" style="--k:12ch"><a class="k cmd" href="#projects">projetos</a><span>Repositórios públicos no GitHub</span></p>
+                                <p class="opt" style="--k:12ch"><a class="k cmd" href="#formacao">formacao</a><span>Formação acadêmica &amp; idiomas</span></p>
+                                <p class="opt" style="--k:12ch"><a class="k cmd" href="#contato">contato</a><span>Vamos conversar? E-mail, WhatsApp e LinkedIn</span></p>
                             </div>
-                            <div class="exp-metric">
-                                <div class="exp-metric-num">55 s → 3,5 s</div>
-                                <div class="exp-metric-label">6.500 etiquetas de produto, arquivo 48% menor e fim das
-                                    quedas por falta de memória</div>
-                            </div>
-                            <div class="exp-metric">
-                                <div class="exp-metric-num">54</div>
-                                <div class="exp-metric-label">Entregas de integração com Magis5, Bling, Tiny, Omie e
-                                    Magazord</div>
+                            <div class="col opts">
+                                <p class="lbl">Opções:</p>
+                                <p class="opt"><span class="k">-e, --email</span><a href="mailto:nicolaspopovicz@gmail.com">nicolaspopovicz@gmail.com</a></p>
+                                <p class="opt"><span class="k">-w, --whatsapp</span><a href="https://wa.me/5541984206797?text=Ol%C3%A1%2C%20Nicolas%21%20Encontrei%20seu%20contato%20pelo%20seu%20site%20e%20gostaria%20de%20conversar%20para%20me%20informar%20sobre%20" target="_blank" rel="noopener noreferrer">+55 41 98420-6797</a></p>
+                                <p class="opt"><span class="k">-l, --linkedin</span><a href="https://linkedin.com/in/nicolas-popovicz" target="_blank" rel="noopener noreferrer">in/nicolas-popovicz</a></p>
+                                <p class="opt"><span class="k">-g, --github</span><a href="https://github.com/NicolasPopovicz" target="_blank" rel="noopener noreferrer">github.com/NicolasPopovicz</a></p>
+                                <p class="opt"><span class="k">-v, --version</span><span><button type="button" class="run" data-run="nicolas --version">há quanto tempo estou em produção</button></span></p>
                             </div>
                         </div>
-                        <div class="exp-subhead">Também entreguei</div>
-                        <ul class="exp-bullets">
-                            <li class="exp-bullet">Acesso e segurança: usuário com múltiplos armazéns e múltiplas
-                                permissões, aviso de sessão aberta em outro aparelho, auditoria e reforço do isolamento
-                                entre clientes (multi-tenant) e da proteção de credenciais</li>
-                            <li class="exp-bullet">Cross Docking, novas listagens de pedidos, produtos e inventário,
-                                cadastro em massa por planilha e suporte a CNPJ alfanumérico</li>
-                            <li class="exp-bullet">Processo: especificação e teste antes do código (SDD/BDD/TDD) e
-                                estruturação do uso de IA no time, com regras do projeto, agentes de revisão de PR e
-                                automações de triagem</li>
-                        </ul>
+                        <p class="hint">Clique num comando ou digite abaixo. <button type="button" class="run" data-run="help">help</button> lista tudo.</p>
                     </div>
-                </article>
+                    <div class="hist" aria-live="polite"></div>
+                    <form class="prompt" action="#"><span class="ps1" aria-hidden="true"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span><label class="field"><span class="sr">Comando</span><input class="in" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="send" /><span class="mirror" aria-hidden="true"></span></label></form>
+                </section>
 
-                <article class="exp-item reveal">
-                    <div>
-                        <div class="exp-badge">ANTERIOR</div>
-                        <h3 class="exp-company-name">Nexcore (Customer Experience by Selbetti)</h3>
-                        <div class="exp-period">Mar 2024 – Abr 2026</div>
-                        <div class="exp-location">Curitiba · Híbrido</div>
-                        <div class="exp-stack">PHP · Laravel · Angular<br>Node.js · Linux · Docker<br>WebSocket · Asterisk
+                <!-- ═══ 2 · CASES ═══════════════════════════════════════════ -->
+                <section class="panel" id="cases" data-cmd="cases">
+                    <p class="ln login" aria-hidden="true"><span class="os-mac">Last login: <span class="lastlog">Sun Nov 22 09:41:07</span> on ttys002</span><span class="os-win">PowerShell 7.4.6</span></p>
+                    <p class="ln cmdline" aria-hidden="true"><span class="ps1"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span> <span class="typed">cases --help</span></p>
+                    <div class="out">
+                        <p class="usage"><span class="u">Uso:</span> cases [<span class="flag">--case</span> <button type="button" class="run" data-run="cases --case 1">1</button>|<button type="button" class="run" data-run="cases --case 2">2</button>|<button type="button" class="run" data-run="cases --case 3">3</button>]</p>
+                        <div class="desc"><h2>Performance em produção.</h2> Três problemas reais que resolvi na Stokki, um WMS com milhões de pedidos, medidos antes e depois.</div>
+                        <div class="boxes">
+                            <article class="box case" data-entry="1">
+                                <h3 class="bt"><span class="dim">[1]</span> Escolha de pedidos no Cockpit</h3>
+                                <div class="bench">
+                                    <p class="br"><span class="bl">antes</span><span class="bar c-r" data-v="65" data-max="65" aria-hidden="true"></span><span class="bv c-r">~65 s</span></p>
+                                    <p class="br"><span class="bl">depois</span><span class="bar c-g" data-v="0.9" data-max="65" aria-hidden="true"></span><span class="bv c-g">&lt;1 s</span></p>
+                                </div>
+                                <dl class="kv">
+                                    <div><dt>Problema</dt><dd>Escolher pedidos no Cockpit levava cerca de 65 s, numa base com milhões de pedidos.</dd></div>
+                                    <div><dt>O que fiz</dt><dd>No Cockpit e na Expedição, movi as ações pesadas para filas, reescrevi consultas, criei índices e coloquei timeout nas integrações externas.</dd></div>
+                                    <div><dt>Resultado</dt><dd>A escolha de pedidos passou a levar menos de 1 s.</dd></div>
+                                </dl>
+                                <p class="tags">Laravel · Filas · MariaDB</p>
+                            </article>
+                            <article class="box case" data-entry="2">
+                                <h3 class="bt"><span class="dim">[2]</span> Busca de pedidos</h3>
+                                <div class="bench">
+                                    <p class="br"><span class="bl">antes</span><span class="bar c-r" data-v="47" data-lo="15" data-max="47" aria-hidden="true"></span><span class="bv c-r">15–47 s</span></p>
+                                    <p class="br"><span class="bl">depois</span><span class="bar c-g" data-v="1.3" data-max="47" aria-hidden="true"></span><span class="bv c-g">≤1,3 s</span></p>
+                                </div>
+                                <dl class="kv">
+                                    <div><dt>Problema</dt><dd>As consultas da busca de pedidos levavam de 15 a 47 s porque percorriam a base inteira.</dd></div>
+                                    <div><dt>O que fiz</dt><dd>Ajustei as consultas para usar índice em vez de varrer a tabela de pedidos.</dd></div>
+                                    <div><dt>Resultado</dt><dd>Respostas entre 0,5 ms e 1,3 s.</dd></div>
+                                </dl>
+                                <p class="tags">MariaDB · Índices · SQL</p>
+                            </article>
+                            <article class="box case" data-entry="3">
+                                <h3 class="bt"><span class="dim">[3]</span> Resumo diário por e-mail</h3>
+                                <div class="bench">
+                                    <p class="br"><span class="bl">antes</span><span class="bar c-r" data-v="5201" data-max="5201" aria-hidden="true"></span><span class="bv c-r">5.201 consultas</span></p>
+                                    <p class="br"><span class="bl">depois</span><span class="bar c-g" data-v="23" data-max="5201" aria-hidden="true"></span><span class="bv c-g">23 consultas</span></p>
+                                </div>
+                                <dl class="kv">
+                                    <div><dt>Problema</dt><dd>Para montar o resumo diário enviado por e-mail, o sistema fazia 5.201 consultas ao banco.</dd></div>
+                                    <div><dt>O que fiz</dt><dd>Reestruturei a geração do resumo para buscar os dados em 23 consultas.</dd></div>
+                                    <div><dt>Resultado</dt><dd>Resumo cerca de 24× mais rápido.</dd></div>
+                                </dl>
+                                <p class="tags">Laravel · MariaDB</p>
+                            </article>
                         </div>
                     </div>
-                    <div>
-                        <div class="exp-role">Dev Fullstack</div>
-                        <div class="exp-role-sub">Plataforma omnichannel corporativa</div>
-                        <ul class="exp-bullets">
-                            <li class="exp-bullet">Diagnostiquei e resolvi memory leak crítico em serviço Node.js em
-                                produção, eliminando reinicializações não planejadas</li>
-                            <li class="exp-bullet">Tuning de queries e configurações de banco em ambientes com degradação de
-                                performance</li>
-                            <li class="exp-bullet">Desenvolvimento full-stack com Laravel, Node.js e Angular + integrações
-                                com APIs externas e aplicações em tempo real via WebSocket</li>
-                            <li class="exp-bullet">Soluções de comunicação VoIP (Asterisk) e automação de mensagens via
-                                WhatsApp e Telegram</li>
-                            <li class="exp-bullet">Containerização e orquestração com Docker e Kubernetes; automação de
-                                fluxos com Node-RED</li>
+                    <div class="hist" aria-live="polite"></div>
+                    <form class="prompt" action="#"><span class="ps1" aria-hidden="true"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span><label class="field"><span class="sr">Comando</span><input class="in" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="send" /><span class="mirror" aria-hidden="true"></span></label></form>
+                </section>
+
+                <!-- ═══ 3 · EXPERIÊNCIA ═════════════════════════════════════ -->
+                <section class="panel" id="experience" data-cmd="experiencia">
+                    <p class="ln login" aria-hidden="true"><span class="os-mac">Last login: <span class="lastlog">Sun Nov 22 09:41:07</span> on ttys003</span><span class="os-win">PowerShell 7.4.6</span></p>
+                    <p class="ln cmdline" aria-hidden="true"><span class="ps1"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span> <span class="typed">experiencia --help</span></p>
+                    <div class="out">
+                        <p class="usage"><span class="u">Uso:</span> experiencia [<span class="flag">--empresa</span>
+                            <button type="button" class="run" data-run="experiencia --empresa fruitfy">fruitfy</button>|<button type="button" class="run" data-run="experiencia --empresa stokki">stokki</button>|<button type="button" class="run" data-run="experiencia --empresa nexcore">nexcore</button>|<button type="button" class="run" data-run="experiencia --empresa procob">procob</button>|<button type="button" class="run" data-run="experiencia --empresa daju">daju</button>]</p>
+                        <div class="desc"><h2>Histórico Profissional.</h2> 5 empresas desde 2021, da mais recente para a mais antiga.</div>
+                        <div class="log">
+                            <article class="commit" data-entry="fruitfy">
+                                <div class="ch"><span class="hash">7e1f0a2</span> (<b class="c-c">HEAD -&gt;</b> <b class="c-g">fruitfy</b>, <b class="c-y">tag: atual</b>) <h3>Fruitfy</h3> <span class="role">— Senior Software Developer</span></div>
+                                <p class="sub">Plataforma de pagamentos para negócios digitais</p>
+                                <p class="meta">Nov 2026 – Presente · Remoto · <span class="stk">PHP · Laravel</span></p>
+                                <p>Desenvolvimento back-end da plataforma de checkout, pagamentos (Pix, cartão, boleto e carteiras
+                                    digitais), assinaturas e recebimentos de quem vende produtos digitais, como cursos, mentorias,
+                                    comunidades e SaaS, no Brasil e no exterior.</p>
+                            </article>
+                            <article class="commit" data-entry="stokki">
+                                <div class="ch"><span class="hash">3b9d4e8</span> (<b class="c-g">stokki</b>) <h3>Stokki</h3> <span class="role">— Dev Back-end Pleno</span></div>
+                                <p class="sub">WMS e plataforma 3PL · fulfillment, estoque, pedidos, NF-e e integrações</p>
+                                <p class="meta">Abr 2026 – Out 2026 · Curitiba · Híbrido · <span class="stk">PHP · Laravel · MariaDB · Redis · AWS · Docker</span></p>
+                                <p>560 pull requests em cerca de 7 meses, num sistema em produção com milhões de pedidos. Além dos
+                                    <a href="#cases">cases de performance</a>, medidos antes e depois:</p>
+                                <div class="metrics opts">
+                                    <p class="opt" style="--k:14ch"><span class="k">1 GB → 111 MB</span><span>Exportação da auditoria: 713 mil linhas em 14 s, onde antes o processo morria</span></p>
+                                    <p class="opt" style="--k:14ch"><span class="k">55 s → 3,5 s</span><span>6.500 etiquetas de produto, arquivo 48% menor e fim das quedas por falta de memória</span></p>
+                                    <p class="opt" style="--k:14ch"><span class="k">54</span><span>Entregas de integração com Magis5, Bling, Tiny, Omie e Magazord</span></p>
+                                </div>
+                                <p class="lbl2">Também entreguei:</p>
+                                <ul class="plus">
+                                    <li>Acesso e segurança: usuário com múltiplos armazéns e múltiplas permissões, aviso de sessão aberta
+                                        em outro aparelho, auditoria e reforço do isolamento entre clientes (multi-tenant) e da proteção
+                                        de credenciais</li>
+                                    <li>Cross Docking, novas listagens de pedidos, produtos e inventário, cadastro em massa por planilha e
+                                        suporte a CNPJ alfanumérico</li>
+                                    <li>Processo: especificação e teste antes do código (SDD/BDD/TDD) e estruturação do uso de IA no time,
+                                        com regras do projeto, agentes de revisão de PR e automações de triagem</li>
+                                </ul>
+                            </article>
+                            <article class="commit" data-entry="nexcore">
+                                <div class="ch"><span class="hash">c41a7f3</span> (<b class="c-g">nexcore</b>) <h3>Nexcore (Customer Experience by Selbetti)</h3> <span class="role">— Dev Fullstack</span></div>
+                                <p class="sub">Plataforma omnichannel corporativa</p>
+                                <p class="meta">Mar 2024 – Abr 2026 · Curitiba · Híbrido · <span class="stk">PHP · Laravel · Angular · Node.js · Linux · Docker · WebSocket · Asterisk</span></p>
+                                <ul class="plus">
+                                    <li>Diagnostiquei e resolvi memory leak crítico em serviço Node.js em produção, eliminando
+                                        reinicializações não planejadas</li>
+                                    <li>Tuning de queries e configurações de banco em ambientes com degradação de performance</li>
+                                    <li>Desenvolvimento full-stack com Laravel, Node.js e Angular + integrações com APIs externas e
+                                        aplicações em tempo real via WebSocket</li>
+                                    <li>Soluções de comunicação VoIP (Asterisk) e automação de mensagens via WhatsApp e Telegram</li>
+                                    <li>Containerização e orquestração com Docker e Kubernetes; automação de fluxos com Node-RED</li>
+                                </ul>
+                            </article>
+                            <article class="commit" data-entry="procob">
+                                <div class="ch"><span class="hash">9d2e6b1</span> (<b class="c-g">procob</b>) <h3>Procob S/A</h3> <span class="role">— Dev Back-end</span></div>
+                                <p class="sub">Sistemas de análise de crédito</p>
+                                <p class="meta">Fev 2023 – Jan 2024 · Curitiba · Presencial · <span class="stk">Symfony · Node.js · RabbitMQ · Redis · Docker · GitLab CI/CD</span></p>
+                                <ul class="plus">
+                                    <li>Implementei autenticação multifator (2FA) com Symfony e Redis como cache de sessão, aumentando a
+                                        segurança do sistema</li>
+                                    <li>Desenvolvi sistema de web scraping para coleta e população automatizada de base de dados,
+                                        alimentando consultas de análise de crédito</li>
+                                    <li>Autenticação via Azure SSO (SAML) e CI/CD pipelines com GitLab</li>
+                                    <li>Gestão de filas com RabbitMQ e containerização completa com Docker</li>
+                                </ul>
+                            </article>
+                            <article class="commit" data-entry="daju">
+                                <div class="ch"><span class="hash">1f08c5a</span> (<b class="c-g">daju</b>) <h3>Daju LTDA.</h3> <span class="role">— Analista de Dev</span></div>
+                                <p class="sub">Desenvolvimento web full-stack</p>
+                                <p class="meta">Fev 2021 – Fev 2023 · Curitiba · Híbrido · <span class="stk">PHP · Laravel · Node.js · MySQL · JavaScript · TailwindCSS · Linux</span></p>
+                                <ul class="plus">
+                                    <li>Back-end com foco em boas práticas: Clean Architecture, Clean Code e design patterns com
+                                        compatibilidade entre versões de PHP</li>
+                                    <li>Criação e consumo de APIs REST/RESTful com revisão de código para garantir escalabilidade</li>
+                                    <li>Full-stack com PHP, Node.js, Laravel e MySQL; versionamento com Git/GitHub</li>
+                                    <li>Construção de interfaces com HTML5, CSS3, JavaScript e TailwindCSS em ambientes Linux</li>
+                                </ul>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="hist" aria-live="polite"></div>
+                    <form class="prompt" action="#"><span class="ps1" aria-hidden="true"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span><label class="field"><span class="sr">Comando</span><input class="in" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="send" /><span class="mirror" aria-hidden="true"></span></label></form>
+                </section>
+
+                <!-- ═══ 4 · SKILLS ══════════════════════════════════════════ -->
+                <section class="panel" id="skills" data-cmd="skills">
+                    <p class="ln login" aria-hidden="true"><span class="os-mac">Last login: <span class="lastlog">Sun Nov 22 09:41:07</span> on ttys004</span><span class="os-win">PowerShell 7.4.6</span></p>
+                    <p class="ln cmdline" aria-hidden="true"><span class="ps1"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span> <span class="typed">skills --help</span></p>
+                    <div class="out">
+                        <p class="usage"><span class="u">Uso:</span> skills [<span class="flag">--categoria</span> <i>NOME</i>]</p>
+                        <div class="desc"><h2>Tecnologias &amp; Ferramentas.</h2></div>
+                        <p class="root-dir" aria-hidden="true">skills/</p>
+                        <ul class="tree">
+                            <li data-entry="linguagens"><h3 class="dir">Linguagens/</h3><span class="items"><span class="hi">PHP</span><span>TypeScript</span><span>JavaScript</span></span></li>
+                            <li data-entry="frameworks"><h3 class="dir">Frameworks/</h3><span class="items"><span class="hi">Laravel</span><span class="hi">Node.js</span><span>Symfony</span><span>Express.js</span><span>Angular</span><span>React</span><span>Vue</span></span></li>
+                            <li data-entry="bancos"><h3 class="dir">Bancos de Dados/</h3><span class="items"><span>MariaDB</span><span>MySQL</span><span>PostgreSQL</span><span>Redis</span><span>MongoDB</span></span></li>
+                            <li data-entry="infraestrutura"><h3 class="dir">Infraestrutura/</h3><span class="items"><span>Docker</span><span>AWS</span><span>Kubernetes</span><span>RabbitMQ</span><span>Microsserviços</span><span>Linux</span></span></li>
+                            <li data-entry="arquitetura"><h3 class="dir">Arquitetura/</h3><span class="items"><span>SOLID</span><span>Clean Architecture</span><span>MVC</span><span>DDD</span><span>Multi-tenant</span></span></li>
+                            <li data-entry="testes"><h3 class="dir">Testes &amp; Métodos/</h3><span class="items"><span>PHPUnit</span><span>Jest</span><span>TDD</span><span>BDD</span><span>CI/CD</span><span>Scrum</span><span>Kanban</span></span></li>
                         </ul>
+                        <p class="hint" id="tree-count">6 diretórios, 33 arquivos</p>
                     </div>
-                </article>
+                    <div class="hist" aria-live="polite"></div>
+                    <form class="prompt" action="#"><span class="ps1" aria-hidden="true"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span><label class="field"><span class="sr">Comando</span><input class="in" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="send" /><span class="mirror" aria-hidden="true"></span></label></form>
+                </section>
 
-                <article class="exp-item reveal">
-                    <div>
-                        <div class="exp-badge">ANTERIOR</div>
-                        <h3 class="exp-company-name">Procob S/A</h3>
-                        <div class="exp-period">Fev 2023 – Jan 2024</div>
-                        <div class="exp-location">Curitiba · Presencial</div>
-                        <div class="exp-stack">Symfony · Node.js<br>RabbitMQ · Redis<br>Docker · GitLab CI/CD</div>
+                <!-- ═══ 5 · PROJETOS ════════════════════════════════════════ -->
+                <section class="panel" id="projects" data-cmd="projetos">
+                    <p class="ln login" aria-hidden="true"><span class="os-mac">Last login: <span class="lastlog">Sun Nov 22 09:41:07</span> on ttys005</span><span class="os-win">PowerShell 7.4.6</span></p>
+                    <p class="ln cmdline" aria-hidden="true"><span class="ps1"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span> <span class="typed">projetos --help</span></p>
+                    <div class="out">
+                        <p class="usage"><span class="u">Uso:</span> projetos [<span class="flag">--limite</span> <i>N</i>]</p>
+                        <div class="desc"><h2>GitHub Repos.</h2> Repositórios públicos em <a href="https://github.com/NicolasPopovicz" target="_blank" rel="noopener noreferrer">github.com/NicolasPopovicz</a>.</div>
+                        <p class="fetch" aria-live="polite"><span class="spin c-c">⠋</span> GET api.github.com/users/NicolasPopovicz/repos</p>
+                        <div class="boxes repos" id="repos">
+                            <article class="box repo sk" aria-hidden="true"><p class="bt">░░░░░░░░░░░░</p><p class="rd">░░░░░░░░░░░░░░░░░░░░░░░░ ░░░░░░░░░░░░</p><p class="rm">░░░░ ░░░░░░</p></article>
+                            <article class="box repo sk" aria-hidden="true"><p class="bt">░░░░░░░░░</p><p class="rd">░░░░░░░░░░░░░░░░░ ░░░░░░░░░░░░░░</p><p class="rm">░░░░ ░░░░░░</p></article>
+                            <article class="box repo sk" aria-hidden="true"><p class="bt">░░░░░░░░░░░░░░</p><p class="rd">░░░░░░░░░░░░░░░░░░░░ ░░░░░░░</p><p class="rm">░░░░ ░░░░░░</p></article>
+                            <article class="box repo sk" aria-hidden="true"><p class="bt">░░░░░░░░</p><p class="rd">░░░░░░░░░░░░░░░░░░░░░░░ ░░░░░░░░</p><p class="rm">░░░░ ░░░░░░</p></article>
+                            <article class="box repo sk" aria-hidden="true"><p class="bt">░░░░░░░░░░░</p><p class="rd">░░░░░░░░░░░░░░ ░░░░░░░░░░░░░░░</p><p class="rm">░░░░ ░░░░░░</p></article>
+                            <article class="box repo sk" aria-hidden="true"><p class="bt">░░░░░░░░░░░░</p><p class="rd">░░░░░░░░░░░░░░░░░░░░░ ░░░░░░</p><p class="rm">░░░░ ░░░░░░</p></article>
+                        </div>
+                        <noscript><p class="sect">Veja meus repositórios em <a href="https://github.com/NicolasPopovicz">github.com/NicolasPopovicz</a></p></noscript>
                     </div>
-                    <div>
-                        <div class="exp-role">Dev Back-end</div>
-                        <div class="exp-role-sub">Sistemas de análise de crédito</div>
-                        <ul class="exp-bullets">
-                            <li class="exp-bullet">Implementei autenticação multifator (2FA) com Symfony e Redis como cache
-                                de sessão, aumentando a segurança do sistema</li>
-                            <li class="exp-bullet">Desenvolvi sistema de web scraping para coleta e população automatizada
-                                de base de dados, alimentando consultas de análise de crédito</li>
-                            <li class="exp-bullet">Autenticação via Azure SSO (SAML) e CI/CD pipelines com GitLab</li>
-                            <li class="exp-bullet">Gestão de filas com RabbitMQ e containerização completa com Docker</li>
-                        </ul>
-                    </div>
-                </article>
+                    <div class="hist" aria-live="polite"></div>
+                    <form class="prompt" action="#"><span class="ps1" aria-hidden="true"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span><label class="field"><span class="sr">Comando</span><input class="in" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="send" /><span class="mirror" aria-hidden="true"></span></label></form>
+                </section>
 
-                <article class="exp-item reveal">
-                    <div>
-                        <div class="exp-badge">ANTERIOR</div>
-                        <h3 class="exp-company-name">Daju LTDA.</h3>
-                        <div class="exp-period">Fev 2021 – Fev 2023</div>
-                        <div class="exp-location">Curitiba · Híbrido</div>
-                        <div class="exp-stack">PHP · Laravel · Node.js<br>MySQL · JavaScript<br>TailwindCSS · Linux</div>
+                <!-- ═══ 6 · FORMAÇÃO ════════════════════════════════════════ -->
+                <section class="panel" id="formacao" data-cmd="formacao">
+                    <p class="ln login" aria-hidden="true"><span class="os-mac">Last login: <span class="lastlog">Sun Nov 22 09:41:07</span> on ttys006</span><span class="os-win">PowerShell 7.4.6</span></p>
+                    <p class="ln cmdline" aria-hidden="true"><span class="ps1"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span> <span class="typed">formacao --help</span></p>
+                    <div class="out">
+                        <p class="usage"><span class="u">Uso:</span> formacao [<span class="flag"><button type="button" class="run" data-run="formacao --idiomas">--idiomas</button></span>]</p>
+                        <div class="desc"><h2>Formação &amp; Idiomas.</h2></div>
+                        <div class="boxes">
+                            <section class="box" data-entry="academica">
+                                <h3 class="bt">Formação Acadêmica</h3>
+                                <div class="edu">
+                                    <p class="er"><span>2024 – 2026</span><b>Cruzeiro do Sul</b><span>Graduação em Tecnologia</span></p>
+                                    <p class="er"><span>2019 – 2020</span><b>SENAI</b><span>Desenvolvimento de Sistemas Web (Técnico)</span></p>
+                                    <p class="er"><span>2021 – 2022</span><b>Udemy</b><span>Linux Fundamentals · Angular 2 · Banco de Dados · Adobe XD</span></p>
+                                </div>
+                            </section>
+                            <section class="box" data-entry="idiomas">
+                                <h3 class="bt">Idiomas</h3>
+                                <div class="edu">
+                                    <p class="lr"><b>Português</b><span class="bar c-g" data-v="10" data-max="10" data-cols="10" data-track="░" aria-hidden="true"></span><span>Nativo</span></p>
+                                    <p class="lr"><b>Inglês</b><span class="bar c-g" data-v="8" data-max="10" data-cols="10" data-track="░" aria-hidden="true"></span><span>Avançado</span></p>
+                                    <p class="lr"><b>Japonês</b><span class="bar c-g" data-v="2" data-max="10" data-cols="10" data-track="░" aria-hidden="true"></span><span>Iniciante</span></p>
+                                </div>
+                            </section>
+                        </div>
                     </div>
-                    <div>
-                        <div class="exp-role">Analista de Dev</div>
-                        <div class="exp-role-sub">Desenvolvimento web full-stack</div>
-                        <ul class="exp-bullets">
-                            <li class="exp-bullet">Back-end com foco em boas práticas: Clean Architecture, Clean Code e
-                                design patterns com compatibilidade entre versões de PHP</li>
-                            <li class="exp-bullet">Criação e consumo de APIs REST/RESTful com revisão de código para
-                                garantir escalabilidade</li>
-                            <li class="exp-bullet">Full-stack com PHP, Node.js, Laravel e MySQL; versionamento com
-                                Git/GitHub</li>
-                            <li class="exp-bullet">Construção de interfaces com HTML5, CSS3, JavaScript e TailwindCSS em
-                                ambientes Linux</li>
-                        </ul>
-                    </div>
-                </article>
+                    <div class="hist" aria-live="polite"></div>
+                    <form class="prompt" action="#"><span class="ps1" aria-hidden="true"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span><label class="field"><span class="sr">Comando</span><input class="in" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="send" /><span class="mirror" aria-hidden="true"></span></label></form>
+                </section>
 
+                <!-- ═══ 7 · CONTATO ═════════════════════════════════════════ -->
+                <section class="panel" id="contato" data-cmd="contato">
+                    <p class="ln login" aria-hidden="true"><span class="os-mac">Last login: <span class="lastlog">Sun Nov 22 09:41:07</span> on ttys007</span><span class="os-win">PowerShell 7.4.6</span></p>
+                    <p class="ln cmdline" aria-hidden="true"><span class="ps1"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span> <span class="typed">contato --help</span></p>
+                    <div class="out">
+                        <p class="usage"><span class="u">Uso:</span> contato [<span class="flag">--email</span> | <span class="flag">--whatsapp</span> | <span class="flag">--linkedin</span> | <span class="flag">--github</span>]</p>
+                        <div class="desc"><h2>Vamos conversar?</h2> Estou aberto a novas oportunidades e a projetos freelance
+                            fullstack. Se o seu sistema está lento, precisa conversar com outro sistema ou tem processos pesados
+                            travando a operação, me chama.</div>
+                        <div class="cols">
+                            <div class="col">
+                                <p class="lbl">Freela:</p>
+                                <p class="sub-lbl">Back-end</p>
+                                <ul class="checks">
+                                    <li>Performance de banco de dados e de aplicações PHP/Laravel</li>
+                                    <li>Integrações com ERPs, marketplaces e APIs de terceiros</li>
+                                    <li>Filas, jobs e processamento em lote</li>
+                                    <li>APIs REST em PHP/Laravel ou Node.js</li>
+                                </ul>
+                                <p class="sub-lbl">Front-end &amp; design</p>
+                                <ul class="checks">
+                                    <li>Aplicações em Angular e Vue.js (e React), com TypeScript</li>
+                                    <li>Interfaces responsivas com HTML5, CSS3 e TailwindCSS</li>
+                                    <li>Design de interfaces e protótipos no Figma</li>
+                                </ul>
+                            </div>
+                            <div class="col opts">
+                                <p class="lbl">Opções:</p>
+                                <p class="opt"><span class="k">-e, --email</span><a href="mailto:nicolaspopovicz@gmail.com?subject=Contato%20pelo%20portf%C3%B3lio">nicolaspopovicz@gmail.com</a></p>
+                                <p class="opt"><span class="k">-w, --whatsapp</span><a href="https://wa.me/5541984206797?text=Ol%C3%A1%2C%20Nicolas%21%20Encontrei%20seu%20contato%20pelo%20seu%20site%20e%20gostaria%20de%20conversar%20para%20me%20informar%20sobre%20" target="_blank" rel="noopener noreferrer">+55 41 98420-6797</a></p>
+                                <p class="opt"><span class="k">-l, --linkedin</span><a href="https://linkedin.com/in/nicolas-popovicz" target="_blank" rel="noopener noreferrer">in/nicolas-popovicz</a></p>
+                                <p class="opt"><span class="k">-g, --github</span><a href="https://github.com/NicolasPopovicz" target="_blank" rel="noopener noreferrer">github.com/NicolasPopovicz</a></p>
+                            </div>
+                        </div>
+                        <div class="sect opts">
+                            <p class="lbl">Exemplos:</p>
+                            <p class="opt" style="--k:20ch"><span><button type="button" class="run" data-run="contato --email">contato --email</button></span><span class="dim"># abre seu cliente de e-mail</span></p>
+                            <p class="opt" style="--k:20ch"><span><button type="button" class="run" data-run="contato --whatsapp">contato --whatsapp</button></span><span class="dim"># abre uma conversa no WhatsApp</span></p>
+                        </div>
+                    </div>
+                    <div class="hist" aria-live="polite"></div>
+                    <form class="prompt" action="#"><span class="ps1" aria-hidden="true"><span class="pa"></span><span class="pb"></span><span class="pc"></span><span class="pd"></span></span><label class="field"><span class="sr">Comando</span><input class="in" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="send" /><span class="mirror" aria-hidden="true"></span></label></form>
+                </section>
+
+            </main>
+
+            <div class="ended" id="ended" hidden>
+                <pre></pre>
+                <button type="button" id="restart">Reiniciar sessão ⏎</button>
             </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- SKILLS ───────────────────────────────────────────────────── -->
-        <section id="skills">
-            <div class="reveal">
-                <div class="section-tag">Skills</div>
-                <h2 class="section-title">Tecnologias &amp; <em>Ferramentas</em></h2>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card reveal" style="transition-delay:0.05s">
-                    <h3 class="skill-cat">Linguagens</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PHP</span>
-                        <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">JavaScript</span>
-                    </div>
-                </div>
-                <div class="skill-card reveal" style="transition-delay:0.1s">
-                    <h3 class="skill-cat">Frameworks</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Laravel</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Symfony</span>
-                        <span class="skill-tag">Express.js</span>
-                        <span class="skill-tag">Angular</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Vue</span>
-                    </div>
-                </div>
-                <div class="skill-card reveal" style="transition-delay:0.15s">
-                    <h3 class="skill-cat">Bancos de Dados</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">MariaDB</span>
-                        <span class="skill-tag">MySQL</span>
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">MongoDB</span>
-                    </div>
-                </div>
-                <div class="skill-card reveal" style="transition-delay:0.2s">
-                    <h3 class="skill-cat">Infraestrutura</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">RabbitMQ</span>
-                        <span class="skill-tag">Microsserviços</span>
-                        <span class="skill-tag">Linux</span>
-                    </div>
-                </div>
-                <div class="skill-card reveal" style="transition-delay:0.25s">
-                    <h3 class="skill-cat">Arquitetura</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">SOLID</span>
-                        <span class="skill-tag">Clean Architecture</span>
-                        <span class="skill-tag">MVC</span>
-                        <span class="skill-tag">DDD</span>
-                        <span class="skill-tag">Multi-tenant</span>
-                    </div>
-                </div>
-                <div class="skill-card reveal" style="transition-delay:0.3s">
-                    <h3 class="skill-cat">Testes &amp; Métodos</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PHPUnit</span>
-                        <span class="skill-tag">Jest</span>
-                        <span class="skill-tag">TDD</span>
-                        <span class="skill-tag">BDD</span>
-                        <span class="skill-tag">CI/CD</span>
-                        <span class="skill-tag">Scrum</span>
-                        <span class="skill-tag">Kanban</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- PROJECTS ─────────────────────────────────────────────────── -->
-        <section id="projects">
-            <div class="reveal">
-                <div class="section-tag">Projetos</div>
-                <h2 class="section-title">GitHub <em>Repos</em></h2>
-            </div>
-            <div class="projects-grid" id="projects-grid">
-                <div class="project-skeleton"></div>
-                <div class="project-skeleton"></div>
-                <div class="project-skeleton"></div>
-                <noscript>
-                    <div class="project-loading">
-                        Veja meus repositórios em
-                        <a href="https://github.com/NicolasPopovicz" class="btn-primary">github.com/NicolasPopovicz</a>
-                    </div>
-                </noscript>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- EDUCATION + LANGUAGES ────────────────────────────────────── -->
-        <section id="formacao">
-            <div class="reveal">
-                <div class="section-tag">Formação</div>
-                <h2 class="section-title">Formação &amp; <em>Idiomas</em></h2>
-            </div>
-            <div class="bottom-grid">
-                <div class="info-card reveal">
-                    <h3 class="info-card-title">Formação Acadêmica</h3>
-                    <div class="edu-item">
-                        <div class="edu-school">Cruzeiro do Sul</div>
-                        <div class="edu-course">Graduação em Tecnologia</div>
-                        <div class="edu-period">2024 – 2026</div>
-                    </div>
-                    <div class="edu-item">
-                        <div class="edu-school">SENAI</div>
-                        <div class="edu-course">Desenvolvimento de Sistemas Web (Técnico)</div>
-                        <div class="edu-period">2019 – 2020</div>
-                    </div>
-                    <div class="edu-item">
-                        <div class="edu-school">Udemy</div>
-                        <div class="edu-course">Linux Fundamentals · Angular 2 · Banco de Dados · Adobe XD</div>
-                        <div class="edu-period">2021 – 2022</div>
-                    </div>
-                </div>
-                <div class="info-card reveal" style="transition-delay:0.1s">
-                    <h3 class="info-card-title">Idiomas</h3>
-                    <div class="lang-item">
-                        <span class="lang-name">Português</span>
-                        <span class="lang-level-badge">Nativo</span>
-                    </div>
-                    <div class="lang-item">
-                        <span class="lang-name">Inglês</span>
-                        <span class="lang-level-badge">Avançado</span>
-                    </div>
-                    <div class="lang-item">
-                        <span class="lang-name">Japonês</span>
-                        <span class="lang-level-badge">Iniciante</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <!-- CONTACT ──────────────────────────────────────────────────── -->
-        <section id="contato">
-            <div class="contact-cta reveal">
-                <div>
-                    <div class="section-tag">Contato</div>
-                    <h2 class="section-title">Vamos <em>conversar?</em></h2>
-                    <p class="contact-lead">Estou aberto a novas oportunidades e a projetos freelance de back-end. Se o
-                        seu sistema está lento, precisa conversar com outro sistema ou tem processos pesados travando a
-                        operação, me chama.</p>
-                    <ul class="freela-list">
-                        <li>Performance de banco de dados e de aplicações PHP/Laravel</li>
-                        <li>Integrações com ERPs, marketplaces e APIs de terceiros</li>
-                        <li>Filas, jobs e processamento em lote</li>
-                        <li>APIs REST em PHP/Laravel ou Node.js</li>
-                    </ul>
-                </div>
-                <div class="contact-actions">
-                    <a href="mailto:nicolaspopovicz@gmail.com?subject=Contato%20pelo%20portf%C3%B3lio"
-                        class="contact-action contact-action-primary">
-                        <span class="contact-ico" aria-hidden="true">@</span>
-                        <span class="contact-action-text">
-                            <span class="contact-action-label">E-mail</span>
-                            <span class="contact-action-value">nicolaspopovicz@gmail.com</span>
-                        </span>
-                        <span class="contact-action-arrow" aria-hidden="true">→</span>
-                    </a>
-                    <a href="https://wa.me/5541984206797?text=Ol%C3%A1%2C%20Nicolas%21%20Encontrei%20seu%20contato%20pelo%20seu%20site%20e%20gostaria%20de%20conversar%20para%20me%20informar%20sobre%20" target="_blank" rel="noopener noreferrer"
-                        class="contact-action">
-                        <span class="contact-ico" aria-hidden="true">wa</span>
-                        <span class="contact-action-text">
-                            <span class="contact-action-label">WhatsApp</span>
-                            <span class="contact-action-value">+55 41 98420-6797</span>
-                        </span>
-                        <span class="contact-action-arrow" aria-hidden="true">↗</span>
-                    </a>
-                    <a href="https://linkedin.com/in/nicolas-popovicz" target="_blank" rel="noopener noreferrer"
-                        class="contact-action">
-                        <span class="contact-ico" aria-hidden="true">in</span>
-                        <span class="contact-action-text">
-                            <span class="contact-action-label">LinkedIn</span>
-                            <span class="contact-action-value">nicolas-popovicz</span>
-                        </span>
-                        <span class="contact-action-arrow" aria-hidden="true">↗</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER ───────────────────────────────────────────────────── -->
-    <footer>
-        <div class="footer-logo">Nicolas Popovicz</div>
-        <div class="footer-links">
-            <a href="https://github.com/NicolasPopovicz" target="_blank" rel="noopener noreferrer"
-                class="footer-link">GitHub</a>
-            <a href="https://linkedin.com/in/nicolas-popovicz" target="_blank" rel="noopener noreferrer"
-                class="footer-link">LinkedIn</a>
         </div>
-        <div class="footer-contacts">
-            <a href="mailto:nicolaspopovicz@gmail.com" class="footer-link">nicolaspopovicz@gmail.com</a>
-            <a href="https://wa.me/5541984206797?text=Ol%C3%A1%2C%20Nicolas%21%20Encontrei%20seu%20contato%20pelo%20seu%20site%20e%20gostaria%20de%20conversar%20para%20me%20informar%20sobre%20" target="_blank" rel="noopener noreferrer" class="footer-link">+55 41 98420-6797</a>
-        </div>
-        <div class="footer-text">Curitiba, Brasil · <span id="footer-year">2026</span></div>
-        <button type="button" class="footer-egg" id="footer-egg" title="Easter egg (ou tente o Konami code)">↑↑↓↓←→←→BA</button>
-    </footer>
+    </div>
 
-    <!-- BACK TO TOP ──────────────────────────────────────────────── -->
-    <button id="back-to-top" aria-label="Voltar ao topo">↑</button>
+    <button type="button" class="dock" id="dock" hidden><img src="img/favicon.svg" width="28" height="28" alt="" /> Terminal</button>
 
-    <!-- Scripts ─────────────────────────────────────────────────── -->
-    <script src="js/portfolio.js" defer></script>
 </body>
 
 </html>
